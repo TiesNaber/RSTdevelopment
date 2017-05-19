@@ -9,6 +9,7 @@ namespace Completed
 		public AudioClip chopSound2;				//2 of 2 audio clips that play when the wall is attacked by the player.
 		public Sprite dmgSprite;					//Alternate sprite to display after Wall has been attacked by player.
 		public int hp = 3;							//hit points for the wall.
+		public GameObject[] items;					//Array of spawnable items
 		
 		
 		private SpriteRenderer spriteRenderer;		//Store a component reference to the attached SpriteRenderer.
@@ -34,9 +35,14 @@ namespace Completed
 			hp -= loss;
 			
 			//If hit points are less than or equal to zero:
-			if(hp <= 0)
+			if (hp <= 0) {
+				int i = Random.Range (0, 5);
+				if (i < 3) {
+					Instantiate (items[i], transform.position, Quaternion.identity);
+				}
 				//Disable the gameObject.
 				gameObject.SetActive (false);
+			}
 		}
 	}
 }
