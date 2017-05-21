@@ -141,6 +141,7 @@ namespace Completed
 		//SetupScene initializes our level and calls the previous functions to lay out the game board
 		public void SetupScene (int level)
 		{
+            Debug.Log("called");
 			//Creates the outer walls and floor.
 			BoardSetup ();
 			
