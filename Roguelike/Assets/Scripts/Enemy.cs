@@ -29,7 +29,7 @@ namespace Completed
 			//Find the Player GameObject using it's tag and store a reference to its transform component.
 			target = GameObject.FindGameObjectWithTag ("Player").transform;
 
-            behaviour = (int)Random.Range(0, 2);
+            behaviour = (int)Random.Range(0, 3);
 
 			//Call the start function of our base class MovingObject.
 			base.Start ();
@@ -50,9 +50,13 @@ namespace Completed
 			
 			//Call the AttemptMove function from MovingObject.
 			base.AttemptMove <T> (xDir, yDir);
-			
-			//Now that Enemy has moved, set skipMove to true to skip next move.
-			skipMove = true;
+
+            if (behaviour == 2 && Random.Range(0f, 3f) > 1)
+                //Now that Enemy has moved, set skipMove to true to skip next move.
+                skipMove = true;
+
+            else
+                skipMove = true;
 		}
 
 
@@ -61,39 +65,34 @@ namespace Completed
         {
             int xDir = 0;
             int yDir = 0;
+            int moveSpeed = 1;
 
             switch (behaviour)
             {
 
                 case 0:
 
-                    //If the difference in positions is approximately zero (Epsilon) do the following:
-                    if (Mathf.Abs(target.position.x - transform.position.x) < float.Epsilon)
-
-                        //If the y coordinate of the target's (player) position is greater than the y coordinate of this enemy's position set y direction 1 (to move up). If not, set it to -1 (to move down).
-                        yDir = target.position.y > transform.position.y ? 1 : -1;
-
-                    //If the difference in positions is not approximately zero (Epsilon) do the following:
-                    else
-                        //Check if target x position is greater than enemy's x position, if so set x direction to 1 (move right), if not set to -1 (move left).
-                        xDir = target.position.x > transform.position.x ? 1 : -1;
+                    moveSpeed = 1;
                     break;
 
                 case 1:
+                    moveSpeed = 2;
+                    break;
+                    
+            }
+            
 
                     //If the difference in positions is approximately zero (Epsilon) do the following:
                     if (Mathf.Abs(target.position.x - transform.position.x) < float.Epsilon)
 
-                        //If the y coordinate of the target's (player) position is greater than the y coordinate of this enemy's position set y direction 1 (to move up). If not, set it to -1 (to move down).
-                        yDir = target.position.y > transform.position.y ? 2 : -2;
+                //If the y coordinate of the target's (player) position is greater than the y coordinate of this enemy's position set y direction 1 (to move up). If not, set it to -1 (to move down).
+                yDir = target.position.y > transform.position.y ? moveSpeed : -moveSpeed;
 
-                    //If the difference in positions is not approximately zero (Epsilon) do the following:
-                    else
-                        //Check if target x position is greater than enemy's x position, if so set x direction to 1 (move right), if not set to -1 (move left).
-                        xDir = target.position.x > transform.position.x ? 2 : -2;
-                    break;
-            }
-            
+            //If the difference in positions is not approximately zero (Epsilon) do the following:
+            else
+                //Check if target x position is greater than enemy's x position, if so set x direction to 1 (move right), if not set to -1 (move left).
+                xDir = target.position.x > transform.position.x ? moveSpeed : -moveSpeed;
+
             //Call the AttemptMove function and pass in the generic parameter Player, because Enemy is moving and expecting to potentially encounter a Player
             AttemptMove<Player>(xDir, yDir);
             
