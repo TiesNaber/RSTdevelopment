@@ -24,7 +24,7 @@ public class CameraFollow2DPlatformer : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate ()
     {
-        playerCamera.orthographicSize = (Screen.height / 100f) / 1.5f;
+        //playerCamera.orthographicSize = (Screen.height / 100f) / 1.5f;
 
         Vector3 targetCamPos = target.position + offset;
         transform.position = Vector3.Lerp(transform.position, targetCamPos, smoothing * Time.deltaTime);
