@@ -15,7 +15,7 @@ public class WeaponHandler : MonoBehaviour {
 	void Update () {
 	}
 
-    public void OnClick()
+    public void OnClicked()
     {
         if(!isCrafted)
         {
@@ -27,6 +27,7 @@ public class WeaponHandler : MonoBehaviour {
                     
                     transform.SetParent(childSlot);
                     isCrafted = true;
+                    transform.root.GetChild(0).GetComponent<CraftManager>().OnCrafted();
                     return;
                 }
             }

@@ -15,9 +15,9 @@ public class CraftManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         slots = new Transform[2];
-        slots[0] = transform.GetChild(1).GetChild(0);
-        slots[1] = transform.GetChild(1).GetChild(1);
-        craftedSlot = transform.GetChild(0);
+        slots[0] = transform.GetChild(0).GetChild(0);
+        slots[1] = transform.GetChild(0).GetChild(1);
+        craftedSlot = transform.GetChild(1);
         weaponSlots = transform.root.GetChild(2);
     }
 	
@@ -72,6 +72,7 @@ public class CraftManager : MonoBehaviour {
     {
         Destroy(slots[0].gameObject);
         Destroy(slots[1].gameObject);
+        craftedSlot.GetChild(0).SetParent(weaponSlots.GetChild(0));
         crafted = false;
         openUI = false;
         gameObject.SetActive(false);
