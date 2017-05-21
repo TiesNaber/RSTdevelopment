@@ -70,11 +70,24 @@ public class CraftManager : MonoBehaviour {
 
     public void OnCrafted()
     {
-        Destroy(slots[0].gameObject);
-        Destroy(slots[1].gameObject);
-        craftedSlot.GetChild(0).SetParent(weaponSlots.GetChild(0));
+        Destroy(slots[0].GetChild(0).gameObject);
+        Destroy(slots[1].GetChild(0).gameObject);
+        craftedSlot.GetChild(0).SetParent(GetFreeSlot());
         crafted = false;
         openUI = false;
         gameObject.SetActive(false);
+    }
+
+    Transform GetFreeSlot()
+    {
+        for (int i = 0; i < weaponSlots.childCount; i++)
+        {
+            if(weaponSlots.GetChild(i).childCount == 0)
+            {
+                return weaponSlots.GetChild(i);
+            }
+        }
+
+        return null;
     }
 }
