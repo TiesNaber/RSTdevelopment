@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CraftManager : MonoBehaviour {
 
     [SerializeField]
     private Transform[] slots;
+    private Transform craftedSlot;
+    private Transform weaponSlots;
     private bool openUI;
     private bool crafted;
 
@@ -14,6 +17,8 @@ public class CraftManager : MonoBehaviour {
         slots = new Transform[2];
         slots[0] = transform.GetChild(1).GetChild(0);
         slots[1] = transform.GetChild(1).GetChild(1);
+        craftedSlot = transform.GetChild(0);
+        weaponSlots = transform.root.GetChild(2);
     }
 	
 	// Update is called once per frame
@@ -30,6 +35,7 @@ public class CraftManager : MonoBehaviour {
         if (slots[0].childCount == 0 && slots[1].childCount == 0 && openUI)
         {
             openUI = false;
+            crafted = false;
             gameObject.SetActive(false);
         }
     }
@@ -42,20 +48,32 @@ public class CraftManager : MonoBehaviour {
         {
             if (objectOne == "Stone(Clone)" || objectTwo == "Stone(Clone)")
             {
-                Debug.Log("craft gun");
+                GameObject weapon = (GameObject)Instantiate(Resources.Load("Gun"), craftedSlot);
+                weapon.GetComponent<Button>().onClick.AddListener((delegate { OnCrafted(); }));
             }
             else if (objectOne == "Wood(Clone)" || objectTwo == "Wood(Clone)")
             {
-                Debug.Log("craft bomb");
+                GameObject weapon = (GameObject)Instantiate(Resources.Load("Bomb"), craftedSlot);
+                weapon.GetComponent<Button>().onClick.AddListener((delegate { OnCrafted(); }));
             }
         }
         else if (objectOne == "Stone(Clone)" || objectTwo == "Stone(Clone)")
         {
             if (objectOne == "Wood(Clone)" || objectTwo == "Wood(Clone)")
             {
-                Debug.Log("craft sword");
+                GameObject weapon = (GameObject)Instantiate(Resources.Load("Sword"), craftedSlot);
+                weapon.GetComponent<Button>().onClick.AddListener((delegate { OnCrafted(); }));
             }
 
         }
+    }
+
+    public void OnCrafted()
+    {
+        Destroy(slots[0].gameObject);
+        Destroy(slots[1].gameObject);
+        crafted = false;
+        openUI = false;
+        gameObject.SetActive(false);
     }
 }
