@@ -27,19 +27,19 @@ public class WeaponScript : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
+            
+            Vector2 dir = Vector2.zero;
 
-            if (Physics.Raycast(ray, out hit))
+            RaycastHit2D hit = Physics2D.Raycast(mousePos2D, dir);
+            if (hit != null && hit.collider != null)
             {
-                if (hit.transform.gameObject.tag == "Enemy")
-                {
-                    Debug.Log("ATTACK!");
-                }
+                Debug.Log("ATTACK!");
             }
             else
             {
-                Debug.Log("No hit");
+                Debug.Log("nope");
             }
         }
     }
