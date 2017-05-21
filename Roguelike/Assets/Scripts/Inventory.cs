@@ -27,7 +27,7 @@ public class Inventory : MonoBehaviour {
 		//Sets this to not be destroyed when reloading scene
 		DontDestroyOnLoad(transform.gameObject);
 
-        inventoryUI = transform.GetChild(1);
+        inventoryUI = transform.GetChild(2);
 
         StartCoroutine(ShowUI());
     }

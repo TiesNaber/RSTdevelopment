@@ -18,7 +18,7 @@ public class CraftManager : MonoBehaviour {
         slots[0] = transform.GetChild(0).GetChild(0);
         slots[1] = transform.GetChild(0).GetChild(1);
         craftedSlot = transform.GetChild(1);
-        weaponSlots = transform.root.GetChild(2);
+        weaponSlots = transform.root.GetChild(4);
     }
 	
 	// Update is called once per frame
@@ -72,6 +72,8 @@ public class CraftManager : MonoBehaviour {
     {
         Destroy(slots[0].GetChild(0).gameObject);
         Destroy(slots[1].GetChild(0).gameObject);
+        craftedSlot.GetChild(0).GetComponent<WeaponScript>().Crafted = true;
+        craftedSlot.GetChild(0).GetComponent<WeaponScript>().AttackAmount = (int)Random.Range(1, 4);
         craftedSlot.GetChild(0).SetParent(GetFreeSlot());
         crafted = false;
         openUI = false;
