@@ -9,43 +9,55 @@ public class WeaponHandler : MonoBehaviour {
     [SerializeField]
     Color selectedColor;
 
+    bool leftActive;
+    bool rightActive;
+
     // Use this for initialization
     void Start () {
         baseColor = transform.GetChild(0).GetComponent<Image>().color;
-
     }
 	
 	// Update is called once per frame
 	void Update () {
-
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
-
-        Vector2 dir = Vector2.zero;
-
-        RaycastHit2D hit = Physics2D.Raycast(mousePos2D, dir);
-        if (hit != null && hit.collider != null && hit.collider.tag == "Weapon")
+        
+        if(Input.GetKeyDown(KeyCode.Q))
         {
-            if(hit.transform.parent == transform.GetChild(0))
-            {
-                SetWeapon(0, 1);
-            }
-            else if (hit.transform.parent == transform.GetChild(1))
-            {
-                SetWeapon(1, 0);
-            }
+            SetWeapon(true);
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            SetWeapon(false);
         }
     }
 
-    void SetWeapon(int clicked, int notClicked)
+    void SetWeapon(bool left)
     {
-        transform.GetChild(clicked).GetChild(0).GetComponent<WeaponScript>().enabled = true;
-        transform.GetChild(clicked).GetComponent<Image>().color = selectedColor;
+        Transform leftSlot = transform.GetChild(0);
+        Transform rightSlot = transform.GetChild(1);
 
-        if (transform.GetChild(notClicked).childCount > 0)
+        if (left)
         {
-            transform.GetChild(notClicked).GetChild(0).GetComponent<WeaponScript>().enabled = false;
-            transform.GetChild(notClicked).GetComponent<Image>().color = baseColor;
+            if (leftSlot.childCount > 0)
+            {
+                leftSlot.GetComponent<Image>().color = selectedColor;
+                rightSlot.GetComponent<Image>().color = baseColor;
+                leftSlot.GetChild(0).GetComponent<WeaponScript>().enabled = true;
+
+                if(rightSlot.childCount > 0)
+                    rightSlot.GetChild(0).GetComponent<WeaponScript>().enabled = false;
+            }
+        }
+        else
+        {
+            if (transform.GetChild(1).childCount > 0)
+            {
+                rightSlot.GetComponent<Image>().color = selectedColor;
+                leftSlot.GetComponent<Image>().color = baseColor;
+                rightSlot.GetChild(0).GetComponent<WeaponScript>().enabled = true;
+
+                if (rightSlot.childCount > 0)
+                    leftSlot.GetChild(0).GetComponent<WeaponScript>().enabled = false;
+            }
         }
     }
 }

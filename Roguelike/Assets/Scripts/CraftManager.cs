@@ -49,12 +49,12 @@ public class CraftManager : MonoBehaviour {
             if (objectOne == "Stone(Clone)" || objectTwo == "Stone(Clone)")
             {
                 GameObject weapon = (GameObject)Instantiate(Resources.Load("Gun"), craftedSlot);
-                weapon.GetComponent<Button>().onClick.AddListener((delegate { OnCrafted(); }));
+                weapon.GetComponent<Button>().onClick.AddListener(OnCrafted);
             }
             else if (objectOne == "Wood(Clone)" || objectTwo == "Wood(Clone)")
             {
                 GameObject weapon = (GameObject)Instantiate(Resources.Load("Bomb"), craftedSlot);
-                weapon.GetComponent<Button>().onClick.AddListener((delegate { OnCrafted(); }));
+                weapon.GetComponent<Button>().onClick.AddListener(OnCrafted);
             }
         }
         else if (objectOne == "Stone(Clone)" || objectTwo == "Stone(Clone)")
@@ -62,7 +62,7 @@ public class CraftManager : MonoBehaviour {
             if (objectOne == "Wood(Clone)" || objectTwo == "Wood(Clone)")
             {
                 GameObject weapon = (GameObject)Instantiate(Resources.Load("Sword"), craftedSlot);
-                weapon.GetComponent<Button>().onClick.AddListener((delegate { OnCrafted(); }));
+                weapon.GetComponent<Button>().onClick.AddListener(OnCrafted);
             }
 
         }
@@ -72,8 +72,7 @@ public class CraftManager : MonoBehaviour {
     {
         Destroy(slots[0].GetChild(0).gameObject);
         Destroy(slots[1].GetChild(0).gameObject);
-        craftedSlot.GetChild(0).GetComponent<WeaponScript>().Crafted = true;
-        craftedSlot.GetChild(0).GetComponent<WeaponScript>().AttackAmount = (int)Random.Range(1, 4);
+        craftedSlot.GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
         craftedSlot.GetChild(0).SetParent(GetFreeSlot());
         crafted = false;
         openUI = false;

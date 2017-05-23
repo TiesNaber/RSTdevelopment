@@ -5,17 +5,6 @@ using UnityEngine;
 public class WeaponScript : MonoBehaviour
 {
 
-    private bool crafted;
-    public bool Crafted
-    {
-        set { crafted = value; }
-    }
-
-    private int attackAmount;
-    public int AttackAmount
-    {
-        set { attackAmount = value; }
-    }
     // Use this for initialization
     void Start()
     {
