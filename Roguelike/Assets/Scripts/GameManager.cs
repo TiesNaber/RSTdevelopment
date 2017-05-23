@@ -51,8 +51,16 @@ namespace Completed
 			//Get a component reference to the attached BoardManager script
 			boardScript = GetComponent<BoardManager>();
 
-            
-		}
+            //Call the InitGame function to initialize the first level 
+            if (instance.level != 0)
+            {                
+                startPanel = GameObject.Find("StartPanel");
+                startPanel.SetActive(false);               
+            }
+
+
+
+        }
 
         //this is called only once, and the parameter tells it to be called only after the scene was loaded
         //(otherwise, our Scene Load callback would be called the very first load, and we don't want that)
@@ -72,12 +80,12 @@ namespace Completed
 
         public void StartLevelButton()
         {
-            //Get a reference to our image LevelImage by finding it by name.
-            startPanel = GameObject.Find("StartPanel");
-            startPanel.SetActive(false);
+            
             //Call the InitGame function to initialize the first level 
             if (instance.level == 0)
             {
+                startPanel = GameObject.Find("StartPanel");
+                startPanel.SetActive(false);
                 instance.level++;
                 InitGame();
             }
