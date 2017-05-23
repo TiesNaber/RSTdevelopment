@@ -141,7 +141,6 @@ namespace Completed
 		//SetupScene initializes our level and calls the previous functions to lay out the game board
 		public void SetupScene (int level)
 		{
-            Debug.Log("called");
 			//Creates the outer walls and floor.
 			BoardSetup ();
 			
@@ -156,13 +155,16 @@ namespace Completed
             LayoutObjectAtRandom (foodTiles, foodCount.minimum + ((columns * rows) / 100), foodCount.maximum + ((columns * rows) / 100));            
             //Determine number of enemies based on current level number, based on a logarithmic progression
             int enemyCount = (int)Mathf.Log(level, 2f);
-
             //Instantiate a random number of enemies based on minimum and maximum, at randomized positions.
             Debug.Log("Enemies spawned = ");
             LayoutObjectAtRandom (enemyTiles, enemyCount, enemyCount);
-			
-			//Instantiate the exit tile in the upper right hand corner of our game board
-			Instantiate (exit, new Vector3 (columns - 1, rows - 1, 0f), Quaternion.identity);
+
+            //Choose a position for randomPosition by getting a random position from our list of available Vector3s stored in gridPosition
+            Vector3 randomPosition = RandomPosition();
+            //instantiate the exit at the randomPosition
+            Instantiate(exit, randomPosition, Quaternion.identity);
+
+            
 		}
 	}
 }

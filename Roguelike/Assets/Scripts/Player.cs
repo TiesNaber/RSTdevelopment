@@ -23,9 +23,10 @@ namespace Completed
 		
 		private Animator animator;					//Used to store a reference to the Player's animator component.
 		private int food;                           //Used to store player food points total during level.
-		
-		//Start overrides the Start function of MovingObject
-		protected override void Start ()
+        private bool facingRight = true;
+
+        //Start overrides the Start function of MovingObject
+        protected override void Start ()
 		{
 			//Get a component reference to the Player's animator component
 			animator = GetComponent<Animator>();
@@ -76,7 +77,12 @@ namespace Completed
 				//Pass in horizontal and vertical as parameters to specify the direction to move Player in.
 				AttemptMove<Wall> (horizontal, vertical);
 			}
-		}
+
+            if (horizontal > 0 && !facingRight)
+                Flip();
+            else if (horizontal < 0 && facingRight)
+                Flip();
+        }
 		
 		//AttemptMove overrides the AttemptMove function in the base class MovingObject
 		//AttemptMove takes a generic parameter T which for Player will be of the type Wall, it also takes integers for x and y direction to move in.
@@ -216,6 +222,16 @@ namespace Completed
 				GameManager.instance.GameOver ();
 			}
 		}
-	}
+
+        void Flip()
+        {
+            //Flipping the character by changing the scale to negative or postive
+            facingRight = !facingRight;
+            Vector3 theScale = gameObject.transform.localScale;
+            theScale.x *= -1;
+            gameObject.transform.localScale = theScale;
+           
+        }
+    }
 }
 
