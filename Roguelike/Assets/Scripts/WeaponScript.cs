@@ -33,7 +33,7 @@ public class WeaponScript : MonoBehaviour
             Vector2 dir = Vector2.zero;
 
             RaycastHit2D hit = Physics2D.Raycast(mousePos2D, dir);
-            if (hit != null && hit.collider != null)
+            if (hit != null && hit.collider != null && hit.collider.tag == "Enemy")
             {
                 Debug.Log("ATTACK!");
             }
