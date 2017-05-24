@@ -91,7 +91,7 @@ namespace Completed
 			{
 				startPanel = GameObject.Find("StartPanel");
 				startPanel.SetActive(false);
-				//infoText.enabled = true;
+				infoText.enabled = true;
 				instance.level++;
 				InitGame();
 			}
@@ -113,11 +113,11 @@ namespace Completed
 			//Set the text of levelText to the string "Day" and append the current level number.           
 			levelText.text = "Day " + level;
 
-            /*infoText = GameObject.Find("Info").GetComponent<Text>();
+            infoText = GameObject.Find("Info").GetComponent<Text>();
 			if (infoCount > information.Count)
 				infoCount = 0;
             infoText.text = information[infoCount];
-			infoCount++;*/           
+			infoCount++;           
             
 			
 			//Set levelImage to active blocking player's view of the game board during setup.
