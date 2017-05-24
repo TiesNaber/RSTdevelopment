@@ -57,6 +57,7 @@ public class Ammo : MonoBehaviour
         if ((endPos.x - transform.position.x < 0.1f && endPos.y - transform.position.y < 0.1f) && (endPos.x - transform.position.x > -0.1f && endPos.y - transform.position.y > -0.1f)) 
         {
             GameObject explode = (GameObject)Instantiate(explosion, transform.position, Quaternion.identity);
+            Camera.main.GetComponent<CameraFollow2DPlatformer>().ShakeMe = 1;
             Destroy(explode, 3);
             Destroy(gameObject, 0.01f);
         }

@@ -33,11 +33,6 @@ public class CameraFollow2DPlatformer : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
-		if(Input.GetKey(KeyCode.V))
-		{
-			ShakeMe = 1;
-		}
-
 		Vector3 targetCamPos = target.position + offset;
 		transform.position = Vector3.Lerp(transform.position, targetCamPos, smoothing * Time.deltaTime);
 		if (transform.position.y < lowY)
