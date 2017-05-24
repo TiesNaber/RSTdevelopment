@@ -5,6 +5,8 @@ namespace Completed
 {
 	public class SoundManager : MonoBehaviour 
 	{
+        Transform targetTrans;
+        GameObject player;
 		public AudioSource efxSource;					//Drag a reference to the audio source which will play the sound effects.
 		public AudioSource musicSource;					//Drag a reference to the audio source which will play the music.
 		public static SoundManager instance = null;		//Allows other scripts to call functions from SoundManager.				
@@ -14,6 +16,7 @@ namespace Completed
 		
 		void Awake ()
 		{
+            player = GameObject.Find("Player");
 			//Check if there is already an instance of SoundManager
 			if (instance == null)
 				//if not, set it to this.
@@ -57,5 +60,11 @@ namespace Completed
 			//Play the clip.
 			efxSource.Play();
 		}
-	}
+
+        private void Update()
+        {
+            player = GameObject.Find("Player");
+            transform.position = Vector3.MoveTowards(transform.position, player.transform.position,0.3f);
+        }
+    }
 }
