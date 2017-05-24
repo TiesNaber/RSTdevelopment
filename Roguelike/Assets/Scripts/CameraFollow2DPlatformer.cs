@@ -47,7 +47,7 @@ public class CameraFollow2DPlatformer : MonoBehaviour {
 
 		if (shake > 0)
 		{
-			playerCamera.transform.localPosition = Random.insideUnitSphere * shakeAmount;
+			playerCamera.transform.position += Random.insideUnitSphere * shakeAmount;
 			shake -= Time.deltaTime * decreaseFactor;
 
 		}

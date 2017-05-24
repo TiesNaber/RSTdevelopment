@@ -18,7 +18,7 @@ namespace Completed
 		
 		private Text levelText;									//Text to display current level number.
 		private GameObject levelImage;							//Image to block out level as levels are being set up, background for levelText.
-        private GameObject startPanel;                          //panel to show at the start of the game with a start and exit button.
+		private GameObject startPanel;                          //panel to show at the start of the game with a start and exit button.
 		private BoardManager boardScript;						//Store a reference to our BoardManager which will set up the level.
 		private int level = 0;									//Current level number, expressed in game as "Day 1".
 		private List<Enemy> enemies;							//List of all Enemy units, used to issue them move commands.
@@ -30,17 +30,17 @@ namespace Completed
 		//Awake is always called before any Start functions
 		void Awake()
 		{
-            //Check if instance already exists
-            if (instance == null)
+			//Check if instance already exists
+			if (instance == null)
 
-                //if not, set instance to this
-                instance = this;
+				//if not, set instance to this
+				instance = this;
 
-            //If instance already exists and it's not this:
-            else if (instance != this)
+			//If instance already exists and it's not this:
+			else if (instance != this)
 
-                //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
-                Destroy(gameObject);	
+				//Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
+				Destroy(gameObject);	
 			
 			//Sets this to not be destroyed when reloading scene
 			DontDestroyOnLoad(gameObject);
@@ -51,45 +51,45 @@ namespace Completed
 			//Get a component reference to the attached BoardManager script
 			boardScript = GetComponent<BoardManager>();
 
-            //Call the InitGame function to initialize the first level 
-            if (instance.level != 0)
-            {                
-                startPanel = GameObject.Find("StartPanel");
-                startPanel.SetActive(false);               
-            }
+			//Call the InitGame function to initialize the first level 
+			if (instance.level != 0)
+			{                
+				startPanel = GameObject.Find("StartPanel");
+				startPanel.SetActive(false);               
+			}
 
 
 
-        }
+		}
 
-        //this is called only once, and the parameter tells it to be called only after the scene was loaded
-        //(otherwise, our Scene Load callback would be called the very first load, and we don't want that)
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-        static public void CallbackInitialization()
-        {
-            //register the callback to be called everytime the scene is loaded
-            SceneManager.sceneLoaded += OnSceneLoaded;
-        }
+		//this is called only once, and the parameter tells it to be called only after the scene was loaded
+		//(otherwise, our Scene Load callback would be called the very first load, and we don't want that)
+		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+		static public void CallbackInitialization()
+		{
+			//register the callback to be called everytime the scene is loaded
+			SceneManager.sceneLoaded += OnSceneLoaded;
+		}
 
-        //This is called each time a scene is loaded.
-        static private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
-        {
-            instance.level++;
-            instance.InitGame();
-        }
+		//This is called each time a scene is loaded.
+		static private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+		{
+			instance.level++;
+			instance.InitGame();
+		}
 
-        public void StartLevelButton()
-        {
-            
-            //Call the InitGame function to initialize the first level 
-            if (instance.level == 0)
-            {
-                startPanel = GameObject.Find("StartPanel");
-                startPanel.SetActive(false);
-                instance.level++;
-                InitGame();
-            }
-        }
+		public void StartLevelButton()
+		{
+			
+			//Call the InitGame function to initialize the first level 
+			if (instance.level == 0)
+			{
+				startPanel = GameObject.Find("StartPanel");
+				startPanel.SetActive(false);
+				instance.level++;
+				InitGame();
+			}
+		}
 
 		
 		//Initializes the game for each level.
@@ -104,8 +104,8 @@ namespace Completed
 			//Get a reference to our text LevelText's text component by finding it by name and calling GetComponent.
 			levelText = GameObject.Find("LevelText").GetComponent<Text>();
 
-            //Set the text of levelText to the string "Day" and append the current level number.           
-            levelText.text = "Day " + level; 
+			//Set the text of levelText to the string "Day" and append the current level number.           
+			levelText.text = "Day " + level; 
 			
 			//Set levelImage to active blocking player's view of the game board during setup.
 			levelImage.SetActive(true);

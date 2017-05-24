@@ -23,7 +23,7 @@ public class VisualDamage : MonoBehaviour {
 
 	public void Update()
 	{
-	
+
 	}
 
 	public void MakeItBlink(bool player)
@@ -36,14 +36,14 @@ public class VisualDamage : MonoBehaviour {
 		//make it blink twice
 		myImage.color = blinkColor;
 
-        Vector3 pos = transform.position;
-        GameObject tempHolder = (GameObject)Instantiate(blood, new Vector3(pos.x, pos.y, pos.z - 0.2f), Quaternion.identity);
+		Vector3 pos = transform.position;
+		GameObject tempHolder = (GameObject)Instantiate(blood, new Vector3(pos.x, pos.y, pos.z - 0.2f), Quaternion.identity);
 		Destroy(tempHolder, 1);
 
-        if(!player)
-        {
-            Destroy(gameObject);
-        }
+		if(!player)
+		{
+			gameObject.SetActive(false);
+		}
 		
 		yield return new WaitForSeconds(0.25f);
 		myImage.color = baseColor;
