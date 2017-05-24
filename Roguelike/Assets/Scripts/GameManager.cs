@@ -29,6 +29,7 @@ namespace Completed
 		private List<Enemy> enemies;							//List of all Enemy units, used to issue them move commands.
 		private bool enemiesMoving;								//Boolean to check if enemies are moving.
 		private bool doingSetup = true;							//Boolean to check if we're setting up board, prevent Player from moving during setup.
+
 		
 		
 		
@@ -64,8 +65,7 @@ namespace Completed
 			}
 
 
-
-		}
+        }
 
 		//this is called only once, and the parameter tells it to be called only after the scene was loaded
 		//(otherwise, our Scene Load callback would be called the very first load, and we don't want that)
@@ -91,7 +91,7 @@ namespace Completed
 			{
 				startPanel = GameObject.Find("StartPanel");
 				startPanel.SetActive(false);
-				infoText.enabled = true;
+				//infoText.enabled = true;
 				instance.level++;
 				InitGame();
 			}
@@ -113,11 +113,12 @@ namespace Completed
 			//Set the text of levelText to the string "Day" and append the current level number.           
 			levelText.text = "Day " + level;
 
-			infoText = GameObject.Find("Info").GetComponent<Text>();
+            /*infoText = GameObject.Find("Info").GetComponent<Text>();
 			if (infoCount > information.Count)
 				infoCount = 0;
             infoText.text = information[infoCount];
-			infoCount++;
+			infoCount++;*/           
+            
 			
 			//Set levelImage to active blocking player's view of the game board during setup.
 			levelImage.SetActive(true);

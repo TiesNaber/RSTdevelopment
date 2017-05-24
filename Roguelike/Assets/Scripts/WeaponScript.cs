@@ -16,8 +16,8 @@ public class WeaponScript : MonoBehaviour
     //Bool to check if there is a weaponEquiped
     private bool weaponEquiped;
 
-    private int ammoGun;        //Ammo of the gun
-    private int ammoBomb;       //Ammo of the bomb
+    public static int ammoGun;        //Ammo of the gun
+    public static int ammoBomb;       //Ammo of the bomb
 
     // Use this for initialization
     void Start()
@@ -28,9 +28,10 @@ public class WeaponScript : MonoBehaviour
     void Update()
     {
         //Fires the gun
-        if (weaponEquiped == true && Input.GetMouseButtonDown(0))
+        if (weaponEquiped == true && Input.GetMouseButtonDown(0) && activeWeapon != 3)
         {           
             Instantiate(bullets[activeWeapon], aimPoint.position, aimPoint.rotation);
+            DeactivateWeapon();
         }
         else
         {
@@ -41,8 +42,10 @@ public class WeaponScript : MonoBehaviour
 
     public void SetWeaponActive(string weaponName)
     {
+
         weaponEquiped = true;
 
+        Debug.Log("test");
         if (weaponName == "Bomb(Clone)")
         {
             weaponSlots[0].SetActive(true);
@@ -71,5 +74,15 @@ public class WeaponScript : MonoBehaviour
             activeWeapon = 2;
             Debug.Log("Equip Sword");
         }
+    }
+
+    public void DeactivateWeapon()
+    {
+        weaponEquiped = false;                
+        
+        weaponSlots[0].SetActive(false);
+        weaponSlots[1].SetActive(false);
+        weaponSlots[2].SetActive(false);
+        
     }
 }
