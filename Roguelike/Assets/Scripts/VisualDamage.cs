@@ -13,8 +13,8 @@ public class VisualDamage : MonoBehaviour {
 
 	Color baseColor;            // the color it starts with
 	SpriteRenderer myImage;     // your sprite
-	
 
+    VisionExpansionScript vision;
 	// Use this for initialization
 	void Start () {
 		myImage = GetComponent<SpriteRenderer>();
@@ -43,6 +43,8 @@ public class VisualDamage : MonoBehaviour {
 		if(!player)
 		{
 			gameObject.SetActive(false);
+            vision.ExpandVision();
+
 		}
 		
 		yield return new WaitForSeconds(0.25f);
