@@ -15,6 +15,8 @@ namespace Completed
 		private Transform target;							//Transform to attempt to move toward each turn.
 		private bool skipMove;                              //Boolean to determine whether or not enemy should skip a turn or move this turn.
 		int behaviour;
+
+        int enemyHealth = 4;
 		
 		//Start overrides the virtual Start function of the base class.
 		protected override void Start ()
@@ -110,6 +112,7 @@ namespace Completed
 			//Declare hitPlayer and set it to equal the encountered component.
 			Player hitPlayer = component as Player;
 			hitPlayer.GetComponent<VisualDamage>().MakeItBlink(true);
+           
 			
 			//Call the LoseFood function of hitPlayer passing it playerDamage, the amount of foodpoints to be subtracted.
 			hitPlayer.LoseFood (playerDamage);
@@ -121,8 +124,9 @@ namespace Completed
 			SoundManager.instance.RandomizeSfx (attackSound1, attackSound2);
 		}
 
-		public void GetDamage()
-		{
+		public void GetDamage(int damage)
+        {   
+                      
 			GetComponent<VisualDamage>().MakeItBlink(false);
 		}
 	}
