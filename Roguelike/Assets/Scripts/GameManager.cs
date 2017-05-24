@@ -18,6 +18,7 @@ namespace Completed
 		
 		private Text levelText;									//Text to display current level number.
 		private GameObject levelImage;							//Image to block out level as levels are being set up, background for levelText.
+        private GameObject startPanel;                          //panel to show at the start of the game with a start and exit button.
 		private BoardManager boardScript;						//Store a reference to our BoardManager which will set up the level.
 		private int level = 0;									//Current level number, expressed in game as "Day 1".
 		private List<Enemy> enemies;							//List of all Enemy units, used to issue them move commands.
@@ -51,12 +52,15 @@ namespace Completed
 			boardScript = GetComponent<BoardManager>();
 
             //Call the InitGame function to initialize the first level 
-            if (instance.level == 0)
-            {
-                instance.level++;
-                InitGame();
+            if (instance.level != 0)
+            {                
+                startPanel = GameObject.Find("StartPanel");
+                startPanel.SetActive(false);               
             }
-		}
+
+
+
+        }
 
         //this is called only once, and the parameter tells it to be called only after the scene was loaded
         //(otherwise, our Scene Load callback would be called the very first load, and we don't want that)
@@ -72,6 +76,19 @@ namespace Completed
         {
             instance.level++;
             instance.InitGame();
+        }
+
+        public void StartLevelButton()
+        {
+            
+            //Call the InitGame function to initialize the first level 
+            if (instance.level == 0)
+            {
+                startPanel = GameObject.Find("StartPanel");
+                startPanel.SetActive(false);
+                instance.level++;
+                InitGame();
+            }
         }
 
 		
@@ -181,5 +198,6 @@ namespace Completed
 			enemiesMoving = false;
 		}
 	}
+   
 }
 

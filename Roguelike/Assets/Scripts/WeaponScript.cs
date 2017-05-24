@@ -5,17 +5,6 @@ using UnityEngine;
 public class WeaponScript : MonoBehaviour
 {
 
-    private bool crafted;
-    public bool Crafted
-    {
-        set { crafted = value; }
-    }
-
-    private int attackAmount;
-    public int AttackAmount
-    {
-        set { attackAmount = value; }
-    }
     // Use this for initialization
     void Start()
     {
@@ -33,7 +22,7 @@ public class WeaponScript : MonoBehaviour
             Vector2 dir = Vector2.zero;
 
             RaycastHit2D hit = Physics2D.Raycast(mousePos2D, dir);
-            if (hit != null && hit.collider != null)
+            if (hit != null && hit.collider != null && hit.collider.tag == "Enemy")
             {
                 Debug.Log("ATTACK!");
             }

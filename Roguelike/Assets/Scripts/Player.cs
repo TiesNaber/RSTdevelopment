@@ -19,8 +19,12 @@ namespace Completed
 		public AudioClip eatSound2;					//2 of 2 Audio clips to play when player collects a food object.
 		public AudioClip drinkSound1;				//1 of 2 Audio clips to play when player collects a soda object.
 		public AudioClip drinkSound2;				//2 of 2 Audio clips to play when player collects a soda object.
-		public AudioClip gameOverSound;				//Audio clip to play when player dies.
-		
+		public AudioClip gameOverSound;             //Audio clip to play when player dies.
+        public AudioClip dig;
+        public AudioClip pickup1;
+        public AudioClip pickup2;
+
+
 		private Animator animator;					//Used to store a reference to the Player's animator component.
 		private int food;                           //Used to store player food points total during level.
         private bool facingRight = true;
@@ -127,6 +131,8 @@ namespace Completed
 			
 			//Set the attack trigger of the player's animation controller in order to play the player's attack animation.
 			animator.SetTrigger ("playerChop");
+
+            SoundManager.instance.RandomizeSfx(dig, dig);
 		}
 		
 		
@@ -175,7 +181,8 @@ namespace Completed
 			//Check if the object is an Item
 			else if (other.tag == "Item") {
 				GameObject.Find("CraftCanvas").GetComponent<Inventory>().SetNewSlot (other.gameObject);
-			}
+                SoundManager.instance.RandomizeSfx(pickup1, pickup2);
+            }
 		}
 		
 		

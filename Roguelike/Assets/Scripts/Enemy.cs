@@ -8,13 +8,13 @@ namespace Completed
 	{
 		public int playerDamage; 							//The amount of food points to subtract from the player when attacking.
 		public AudioClip attackSound1;						//First of two audio clips to play when attacking the player.
-		public AudioClip attackSound2;						//Second of two audio clips to play when attacking the player.
-		
-		
+		public AudioClip attackSound2;                      //Second of two audio clips to play when attacking the player.
+		public AudioClip moanSound1;
+
 		private Animator animator;							//Variable of type Animator to store a reference to the enemy's Animator component.
 		private Transform target;							//Transform to attempt to move toward each turn.
 		private bool skipMove;                              //Boolean to determine whether or not enemy should skip a turn or move this turn.
-        int behaviour;
+		int behaviour;
 		
 		//Start overrides the virtual Start function of the base class.
 		protected override void Start ()
@@ -29,7 +29,7 @@ namespace Completed
 			//Find the Player GameObject using it's tag and store a reference to its transform component.
 			target = GameObject.FindGameObjectWithTag ("Player").transform;
 
-            behaviour = (int)Random.Range(0, 3);
+			behaviour = (int)Random.Range(0, 3);
 
 			//Call the start function of our base class MovingObject.
 			base.Start ();
@@ -51,51 +51,55 @@ namespace Completed
 			//Call the AttemptMove function from MovingObject.
 			base.AttemptMove <T> (xDir, yDir);
 
-            if (behaviour == 2 && Random.Range(0f, 3f) > 1)
-                //Now that Enemy has moved, set skipMove to true to skip next move.
-                skipMove = true;
+			if (behaviour == 2 && Random.Range(0f, 3f) > 1)
+				//Now that Enemy has moved, set skipMove to true to skip next move.
+				skipMove = true;
 
-            else
-                skipMove = true;
+			else
+				skipMove = true;
 		}
 
 
-        //MoveEnemy is called by the GameManger each turn to tell each Enemy to try to move towards the player.
-        public void MoveEnemy()
-        {
-            int xDir = 0;
-            int yDir = 0;
-            int moveSpeed = 1;
+		//MoveEnemy is called by the GameManger each turn to tell each Enemy to try to move towards the player.
+		public void MoveEnemy()
+		{
+			int xDir = 0;
+			int yDir = 0;
+			int moveSpeed = 1;
 
-            switch (behaviour)
-            {
+			switch (behaviour)
+			{
 
-                case 0:
+				case 0:
 
-                    moveSpeed = 1;
-                    break;
+					moveSpeed = 1;
+					break;
 
-                case 1:
-                    moveSpeed = 2;
-                    break;
-                    
-            }
-            
+				case 1:
+					moveSpeed = 2;
+					break;
+					
+			}
+			
 
-                    //If the difference in positions is approximately zero (Epsilon) do the following:
-                    if (Mathf.Abs(target.position.x - transform.position.x) < float.Epsilon)
+					//If the difference in positions is approximately zero (Epsilon) do the following:
+					if (Mathf.Abs(target.position.x - transform.position.x) < float.Epsilon)
 
-                //If the y coordinate of the target's (player) position is greater than the y coordinate of this enemy's position set y direction 1 (to move up). If not, set it to -1 (to move down).
-                yDir = target.position.y > transform.position.y ? moveSpeed : -moveSpeed;
+				//If the y coordinate of the target's (player) position is greater than the y coordinate of this enemy's position set y direction 1 (to move up). If not, set it to -1 (to move down).
+				yDir = target.position.y > transform.position.y ? moveSpeed : -moveSpeed;
 
-            //If the difference in positions is not approximately zero (Epsilon) do the following:
-            else
-                //Check if target x position is greater than enemy's x position, if so set x direction to 1 (move right), if not set to -1 (move left).
-                xDir = target.position.x > transform.position.x ? moveSpeed : -moveSpeed;
+			//If the difference in positions is not approximately zero (Epsilon) do the following:
+			else
+				//Check if target x position is greater than enemy's x position, if so set x direction to 1 (move right), if not set to -1 (move left).
+				xDir = target.position.x > transform.position.x ? moveSpeed : -moveSpeed;
 
-            //Call the AttemptMove function and pass in the generic parameter Player, because Enemy is moving and expecting to potentially encounter a Player
-            AttemptMove<Player>(xDir, yDir);
-            
+			//Call the AttemptMove function and pass in the generic parameter Player, because Enemy is moving and expecting to potentially encounter a Player
+			AttemptMove<Player>(xDir, yDir);
+
+			if(Random.Range(0, 5) < 1)
+				SoundManager.instance.RandomizeSfx(moanSound1, moanSound1);
+
+
 		}
 		
 		
@@ -105,6 +109,7 @@ namespace Completed
 		{
 			//Declare hitPlayer and set it to equal the encountered component.
 			Player hitPlayer = component as Player;
+			hitPlayer.GetComponent<VisualDamage>().MakeItBlink(true);
 			
 			//Call the LoseFood function of hitPlayer passing it playerDamage, the amount of foodpoints to be subtracted.
 			hitPlayer.LoseFood (playerDamage);
@@ -114,6 +119,11 @@ namespace Completed
 			
 			//Call the RandomizeSfx function of SoundManager passing in the two audio clips to choose randomly between.
 			SoundManager.instance.RandomizeSfx (attackSound1, attackSound2);
+		}
+
+		public void GetDamage()
+		{
+			GetComponent<VisualDamage>().MakeItBlink(false);
 		}
 	}
 }
