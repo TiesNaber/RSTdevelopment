@@ -99,7 +99,11 @@ public class WeaponScript : MonoBehaviour
 
     public void DeactivateWeapon()
     {
-        weaponEquiped = false;    
+        weaponEquiped = false;
+
+        weaponSlots[0].SetActive(false);
+        weaponSlots[1].SetActive(false);
+        weaponSlots[2].SetActive(false);
     }
 
     void Recoil()
