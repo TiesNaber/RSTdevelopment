@@ -24,7 +24,8 @@ namespace Completed
 		public AudioClip pickup1;
 		public AudioClip pickup2;
 
-        private PlayerFeedback feedbackText;
+        public Text feedbackText;
+        public PlayerFeedback activator;
 		private Animator animator;					//Used to store a reference to the Player's animator component.
 		private int food;                           //Used to store player food points total during level.
 		private bool facingRight = true;
@@ -33,7 +34,7 @@ namespace Completed
 		protected override void Start ()
 		{
 
-            feedbackText = GetComponent<PlayerFeedback>();
+            
 
 			//Get a component reference to the Player's animator component
 			animator = GetComponent<Animator>();
@@ -156,10 +157,14 @@ namespace Completed
 				//Add pointsPerFood to the players current food total.
 				food += pointsPerFood;
 
-                //feedbackText.text = ;
-				
-				//Update foodText to represent current total and notify player that they gained points
-				foodText.text = "+" + pointsPerFood + " Food: " + food;
+                activator.ActiveText();
+                feedbackText.text = "Picked up Food! ";
+                StartCoroutine(FadeOut());
+
+
+
+                //Update foodText to represent current total and notify player that they gained points
+                foodText.text = "+" + pointsPerFood + " Food: " + food;
 				
 				//Call the RandomizeSfx function of SoundManager and pass in two eating sounds to choose between to play the eating sound effect.
 				SoundManager.instance.RandomizeSfx (eatSound1, eatSound2);
@@ -172,9 +177,12 @@ namespace Completed
 			else if (other.tag == "Soda") {
 				//Add pointsPerSoda to players food points total
 				food += pointsPerSoda;
-				
-				//Update foodText to represent current total and notify player that they gained points
-				foodText.text = "+" + pointsPerSoda + " Food: " + food;
+                activator.ActiveText();
+                feedbackText.text = "Picked up a Soda! ";
+                StartCoroutine(FadeOut());
+               
+                //Update foodText to represent current total and notify player that they gained points
+                foodText.text = "+" + pointsPerSoda + " Food: " + food;
 				
 				//Call the RandomizeSfx function of SoundManager and pass in two drinking sounds to choose between to play the drinking sound effect.
 				SoundManager.instance.RandomizeSfx (drinkSound1, drinkSound2);
@@ -187,7 +195,11 @@ namespace Completed
 			else if (other.tag == "Item") {
 				GameObject.Find("CraftCanvas").GetComponent<Inventory>().SetNewSlot (other.gameObject);
 				SoundManager.instance.RandomizeSfx(pickup1, pickup2);
-			}
+                activator.ActiveText();
+                feedbackText.text = "Picked up an " + other.tag + "!";
+                StartCoroutine(FadeOut());
+
+            }
 		}
 		
 		
@@ -244,6 +256,12 @@ namespace Completed
 			gameObject.transform.localScale = theScale;
 		   
 		}
+
+        public IEnumerator FadeOut()
+        {
+            yield return new WaitForSeconds(1);
+            activator.DeactivateText();
+        }
 	}
 }
 
