@@ -23,10 +23,7 @@ public class VisualDamage : MonoBehaviour {
 
 	public void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.A))
-		{
-			MakeItBlink(player);
-		}
+	
 	}
 
 	public void MakeItBlink(bool player)
