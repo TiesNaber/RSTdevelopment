@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class WeaponHandler : MonoBehaviour {
 
+    [SerializeField]
     Color baseColor;
     [SerializeField]
     Color selectedColor;

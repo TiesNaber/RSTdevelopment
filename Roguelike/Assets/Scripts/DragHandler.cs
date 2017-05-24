@@ -24,7 +24,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
 	public void OnDrag (PointerEventData eventData)
 	{
-		transform.position = Input.mousePosition;
+		transform.position = new Vector3(Input.mousePosition.x - 10f, Input.mousePosition.y - 10f, 0);
 	}
 
 	#endregion

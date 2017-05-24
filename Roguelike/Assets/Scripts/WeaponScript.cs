@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponScript : MonoBehaviour
 {
     //the object that you shoot
-    public GameObject[] bullets;
+    public GameObject[] projectiles;
     //the rotation point from where to shoot.
     public Transform aimPoint;
     //Weapon Slots, used to activate or deactivate when you switch weapon (gun/bomb)
@@ -18,8 +18,7 @@ public class WeaponScript : MonoBehaviour
 
     private Animator animator;
 
-    public static int ammoGun;        //Ammo of the gun
-    public static int ammoBomb;       //Ammo of the bomb
+    int ammoGun;        //Ammo of the gun
 
     [SerializeField]
     float damper;
@@ -31,6 +30,8 @@ public class WeaponScript : MonoBehaviour
     {
         set { weaponType = value; }
     }
+
+    WeaponHandler weaponHandler;
 
     // Use this for initialization
     void Start()
@@ -46,15 +47,22 @@ public class WeaponScript : MonoBehaviour
         weaponEquiped = false;
         if(!start)
             GameObject.Find("Weapons").GetComponent<WeaponHandler>().ResetValues();
+
+        if (!weaponHandler)
+            weaponHandler = GameObject.Find("Weapons").GetComponent<WeaponHandler>();
     }    
 
     void Update()
     {
 
         //Fires the gun
-        if (weaponEquiped && Input.GetMouseButtonDown(0) && activeWeapon != 3)
-        {           
-            Instantiate(bullets[activeWeapon], aimPoint.position, aimPoint.rotation);
+        if (weaponEquiped && Input.GetMouseButtonDown(0) && activeWeapon != 2)
+        {
+            if (activeWeapon == 1)
+                Destroy(gameObject);
+            GameObject temp = (GameObject)Instantiate(projectiles[activeWeapon], aimPoint.position, aimPoint.rotation);
+            temp.GetComponent<Ammo>().EndPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            temp.GetComponent<Ammo>().Type = activeWeapon;
             DeactivateWeapon();
         }
         else
