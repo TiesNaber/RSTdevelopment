@@ -24,7 +24,7 @@ namespace Completed
         public AudioClip pickup1;
         public AudioClip pickup2;
 
-
+        private PlayerFeedback feedbackText;
 		private Animator animator;					//Used to store a reference to the Player's animator component.
 		private int food;                           //Used to store player food points total during level.
         private bool facingRight = true;
@@ -32,6 +32,9 @@ namespace Completed
         //Start overrides the Start function of MovingObject
         protected override void Start ()
 		{
+
+            feedbackText = GetComponent<PlayerFeedback>();
+
 			//Get a component reference to the Player's animator component
 			animator = GetComponent<Animator>();
 			
@@ -152,6 +155,8 @@ namespace Completed
 			else if (other.tag == "Food") {
 				//Add pointsPerFood to the players current food total.
 				food += pointsPerFood;
+
+                //feedbackText.text = ;
 				
 				//Update foodText to represent current total and notify player that they gained points
 				foodText.text = "+" + pointsPerFood + " Food: " + food;
