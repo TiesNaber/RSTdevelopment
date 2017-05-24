@@ -20,17 +20,17 @@ namespace Completed
 		public AudioClip drinkSound1;				//1 of 2 Audio clips to play when player collects a soda object.
 		public AudioClip drinkSound2;				//2 of 2 Audio clips to play when player collects a soda object.
 		public AudioClip gameOverSound;             //Audio clip to play when player dies.
-        public AudioClip dig;
-        public AudioClip pickup1;
-        public AudioClip pickup2;
+		public AudioClip dig;
+		public AudioClip pickup1;
+		public AudioClip pickup2;
 
 
 		private Animator animator;					//Used to store a reference to the Player's animator component.
 		private int food;                           //Used to store player food points total during level.
-        private bool facingRight = true;
+		private bool facingRight = true;
 
-        //Start overrides the Start function of MovingObject
-        protected override void Start ()
+		//Start overrides the Start function of MovingObject
+		protected override void Start ()
 		{
 			//Get a component reference to the Player's animator component
 			animator = GetComponent<Animator>();
@@ -82,11 +82,11 @@ namespace Completed
 				AttemptMove<Wall> (horizontal, vertical);
 			}
 
-            if (horizontal > 0 && !facingRight)
-                Flip();
-            else if (horizontal < 0 && facingRight)
-                Flip();
-        }
+			if (horizontal > 0 && !facingRight)
+				Flip();
+			else if (horizontal < 0 && facingRight)
+				Flip();
+		}
 		
 		//AttemptMove overrides the AttemptMove function in the base class MovingObject
 		//AttemptMove takes a generic parameter T which for Player will be of the type Wall, it also takes integers for x and y direction to move in.
@@ -132,7 +132,7 @@ namespace Completed
 			//Set the attack trigger of the player's animation controller in order to play the player's attack animation.
 			animator.SetTrigger ("playerChop");
 
-            SoundManager.instance.RandomizeSfx(dig, dig);
+			SoundManager.instance.RandomizeSfx(dig, dig);
 		}
 		
 		
@@ -181,8 +181,8 @@ namespace Completed
 			//Check if the object is an Item
 			else if (other.tag == "Item") {
 				GameObject.Find("CraftCanvas").GetComponent<Inventory>().SetNewSlot (other.gameObject);
-                SoundManager.instance.RandomizeSfx(pickup1, pickup2);
-            }
+				SoundManager.instance.RandomizeSfx(pickup1, pickup2);
+			}
 		}
 		
 		
@@ -190,8 +190,8 @@ namespace Completed
 		private void Restart ()
 		{
 			//Load the last scene loaded, in this case Main, the only scene in the game. And we load it in "Single" mode so it replace the existing one
-            //and not load all the scene object in the current scene.
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+			//and not load all the scene object in the current scene.
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
 		}
 		
 		
@@ -230,15 +230,15 @@ namespace Completed
 			}
 		}
 
-        void Flip()
-        {
-            //Flipping the character by changing the scale to negative or postive
-            facingRight = !facingRight;
-            Vector3 theScale = gameObject.transform.localScale;
-            theScale.x *= -1;
-            gameObject.transform.localScale = theScale;
-           
-        }
-    }
+		void Flip()
+		{
+			//Flipping the character by changing the scale to negative or postive
+			facingRight = !facingRight;
+			Vector3 theScale = gameObject.transform.localScale;
+			theScale.x *= -1;
+			gameObject.transform.localScale = theScale;
+		   
+		}
+	}
 }
 

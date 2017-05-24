@@ -16,7 +16,12 @@ namespace Completed
 		[HideInInspector] public bool playersTurn = true;		//Boolean to check if it's players turn, hidden in inspector but public.
 		
 		
-		private Text levelText;									//Text to display current level number.
+		private Text levelText;                                 //Text to display current level number.
+        [SerializeField]
+        private Text infoText;                                  //Information text
+		[SerializeField]
+		List<string> information;                                   //All the information parts
+		int infoCount = 0;
 		private GameObject levelImage;							//Image to block out level as levels are being set up, background for levelText.
 		private GameObject startPanel;                          //panel to show at the start of the game with a start and exit button.
 		private BoardManager boardScript;						//Store a reference to our BoardManager which will set up the level.
@@ -86,6 +91,7 @@ namespace Completed
 			{
 				startPanel = GameObject.Find("StartPanel");
 				startPanel.SetActive(false);
+				infoText.enabled = true;
 				instance.level++;
 				InitGame();
 			}
@@ -105,7 +111,13 @@ namespace Completed
 			levelText = GameObject.Find("LevelText").GetComponent<Text>();
 
 			//Set the text of levelText to the string "Day" and append the current level number.           
-			levelText.text = "Day " + level; 
+			levelText.text = "Day " + level;
+
+			infoText = GameObject.Find("Info").GetComponent<Text>();
+			if (infoCount > information.Count)
+				infoCount = 0;
+            infoText.text = information[infoCount];
+			infoCount++;
 			
 			//Set levelImage to active blocking player's view of the game board during setup.
 			levelImage.SetActive(true);
