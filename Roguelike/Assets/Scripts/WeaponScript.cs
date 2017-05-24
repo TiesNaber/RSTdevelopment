@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponScript : MonoBehaviour
 {
     //the object that you shoot
-    public GameObject[] bullets;
+    public GameObject[] projectiles;
     //the rotation point from where to shoot.
     public Transform aimPoint;
     //Weapon Slots, used to activate or deactivate when you switch weapon (gun/bomb)
@@ -52,7 +52,9 @@ public class WeaponScript : MonoBehaviour
         //Fires the gun
         if (weaponEquiped && Input.GetMouseButtonDown(0) && activeWeapon != 3)
         {           
-            Instantiate(bullets[activeWeapon], aimPoint.position, aimPoint.rotation);
+            GameObject temp = (GameObject)Instantiate(projectiles[activeWeapon], aimPoint.position, aimPoint.rotation);
+            temp.GetComponent<Ammo>().EndPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            temp.GetComponent<Ammo>().Type = activeWeapon;
             DeactivateWeapon();
         }
         else
