@@ -19,6 +19,9 @@ public class WeaponScript : MonoBehaviour
     public static int ammoGun;        //Ammo of the gun
     public static int ammoBomb;       //Ammo of the bomb
 
+    [SerializeField]
+    float damper;
+
     private int weaponType = 0;
     public int WeaponType
     {
@@ -90,5 +93,17 @@ public class WeaponScript : MonoBehaviour
         weaponSlots[1].SetActive(false);
         weaponSlots[2].SetActive(false);
         
+    }
+
+    void Recoil()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
+        Transform player = GameObject.Find("Player").transform;
+        Debug.Log(player);
+        Vector2 playerPos = new Vector2(player.position.x, player.position.y);
+        Vector2 newpos = (playerPos - mousePos2D);
+        newpos.Normalize();
+        player.position += new Vector3(newpos.x / damper, newpos.y / damper, 0);
     }
 }
