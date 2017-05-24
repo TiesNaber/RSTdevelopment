@@ -9,7 +9,7 @@ namespace Completed
 	
 	public class GameManager : MonoBehaviour
 	{
-		public float levelStartDelay = 1f;						//Time to wait before starting level, in seconds.
+		float levelStartDelay = 3f;						//Time to wait before starting level, in seconds.
 		public float turnDelay = 0.05f;							//Delay between each Player turn.
 		public int playerFoodPoints = 100;						//Starting value for Player food points.
 		public static GameManager instance = null;				//Static instance of GameManager which allows it to be accessed by any other script.
@@ -116,7 +116,7 @@ namespace Completed
             infoText = GameObject.Find("Info").GetComponent<Text>();
 			if (infoCount > information.Count)
 				infoCount = 0;
-            infoText.text = information[infoCount];
+            infoText.text = information[infoCount].Replace("\\n", System.Environment.NewLine);
 			infoCount++;           
             
 			

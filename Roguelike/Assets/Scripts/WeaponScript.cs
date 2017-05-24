@@ -21,6 +21,8 @@ public class WeaponScript : MonoBehaviour
 
     [SerializeField]
     float damper;
+    [SerializeField]
+    bool start;
 
     private int weaponType = 0;
     public int WeaponType
@@ -31,13 +33,24 @@ public class WeaponScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        weaponSlots[0] = transform.GetChild(2).gameObject;
+        weaponSlots[1] = transform.GetChild(3).gameObject;
+        weaponSlots[2] = transform.GetChild(4).gameObject;
 
+        weaponSlots[0].SetActive(false);
+        weaponSlots[1].SetActive(false);
+        weaponSlots[2].SetActive(false);
+
+        weaponEquiped = false;
+        if(!start)
+            GameObject.Find("Weapons").GetComponent<WeaponHandler>().ResetValues();
     }    
 
     void Update()
     {
+
         //Fires the gun
-        if (weaponEquiped == true && Input.GetMouseButtonDown(0) && activeWeapon != 3)
+        if (weaponEquiped && Input.GetMouseButtonDown(0) && activeWeapon != 3)
         {           
             Instantiate(bullets[activeWeapon], aimPoint.position, aimPoint.rotation);
             DeactivateWeapon();
@@ -46,7 +59,6 @@ public class WeaponScript : MonoBehaviour
         {
             return;
         }
-        
     }
 
     public void SetWeaponActive(string weaponName)
@@ -54,7 +66,7 @@ public class WeaponScript : MonoBehaviour
 
         weaponEquiped = true;
 
-        Debug.Log("test");
+        Debug.Log(weaponSlots[0] + ",  "+weaponSlots[1] + ",  "+weaponSlots[2] + ",  ");
         if (weaponName == "Bomb(Clone)")
         {
             weaponSlots[0].SetActive(true);
@@ -87,12 +99,7 @@ public class WeaponScript : MonoBehaviour
 
     public void DeactivateWeapon()
     {
-        weaponEquiped = false;                
-        
-        weaponSlots[0].SetActive(false);
-        weaponSlots[1].SetActive(false);
-        weaponSlots[2].SetActive(false);
-        
+        weaponEquiped = false;    
     }
 
     void Recoil()
@@ -105,5 +112,10 @@ public class WeaponScript : MonoBehaviour
         Vector2 newpos = (playerPos - mousePos2D);
         newpos.Normalize();
         player.position += new Vector3(newpos.x / damper, newpos.y / damper, 0);
+    }
+
+    void BombAim()
+    {
+        //Vector3 mousePos = Camera.main.ScreenToWorldPoint()
     }
 }

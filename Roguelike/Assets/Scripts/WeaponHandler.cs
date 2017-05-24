@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class WeaponHandler : MonoBehaviour {
 
@@ -23,11 +24,14 @@ public class WeaponHandler : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         
-        if(Input.GetKeyDown(KeyCode.Q))
+        if(!weaponScript)
+            weaponScript = GameObject.Find("Player").GetComponent<WeaponScript>();
+
+        if (Input.mouseScrollDelta.y > 0)
         {
             SetWeapon(true);
         }
-        if (Input.GetKeyDown(KeyCode.E))
+        else if(Input.mouseScrollDelta.y < 0)
         {
             SetWeapon(false);
         }
@@ -44,13 +48,12 @@ public class WeaponHandler : MonoBehaviour {
             {
                 leftSlot.GetComponent<Image>().color = selectedColor;
                 rightSlot.GetComponent<Image>().color = baseColor;
-                leftSlot.GetChild(0).GetComponent<WeaponScript>().enabled = true;
-
-                if(rightSlot.childCount > 0)
-                    rightSlot.GetChild(0).GetComponent<WeaponScript>().enabled = false;
 
                 //Equip weapon
-                weaponScript.SetWeaponActive(leftSlot.GetChild(0).name);
+                if (leftSlot.childCount > 0)
+                    weaponScript.SetWeaponActive(leftSlot.GetChild(0).name);
+                else
+                    Debug.Log("something went wrong");
             }
         }
         else
@@ -59,13 +62,21 @@ public class WeaponHandler : MonoBehaviour {
             {
                 rightSlot.GetComponent<Image>().color = selectedColor;
                 leftSlot.GetComponent<Image>().color = baseColor;
-                rightSlot.GetChild(0).GetComponent<WeaponScript>().enabled = true;
 
                 if (rightSlot.childCount > 0)
-                    leftSlot.GetChild(0).GetComponent<WeaponScript>().enabled = false;
-
-                weaponScript.SetWeaponActive(rightSlot.GetChild(0).name);
+                    weaponScript.SetWeaponActive(rightSlot.GetChild(0).name);
+                else
+                    Debug.Log("something went wrong");
             }
         }
+    }
+
+    public void ResetValues()
+    {
+        Transform leftSlot = transform.GetChild(0);
+        Transform rightSlot = transform.GetChild(1);
+
+        rightSlot.GetComponent<Image>().color = baseColor;
+        leftSlot.GetComponent<Image>().color = baseColor;
     }
 }

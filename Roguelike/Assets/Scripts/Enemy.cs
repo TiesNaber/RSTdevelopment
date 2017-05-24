@@ -98,8 +98,8 @@ namespace Completed
 			//Call the AttemptMove function and pass in the generic parameter Player, because Enemy is moving and expecting to potentially encounter a Player
 			AttemptMove<Player>(xDir, yDir);
 
-			if(Random.Range(0, 5) < 1)
-				SoundManager.instance.RandomizeSfx(moanSound1, moanSound1);
+            if (Random.Range(0, 5) < 1)
+                GetComponent<AudioSource>().Play();
 
 
 		}
