@@ -19,6 +19,12 @@ public class WeaponScript : MonoBehaviour
     private int ammoGun;        //Ammo of the gun
     private int ammoBomb;       //Ammo of the bomb
 
+    private int weaponType = 0;
+    public int WeaponType
+    {
+        set { weaponType = value; }
+    }
+
     // Use this for initialization
     void Start()
     {
