@@ -12,15 +12,26 @@ public class CraftManager : MonoBehaviour {
     private bool openUI;
     private bool crafted;
 
-	// Use this for initialization
-	void Start () {
+    
+
+    public Text FeedbackText;
+    
+
+    // Use this for initialization
+    void Start()
+    {
         slots = new Transform[2];
         slots[0] = transform.GetChild(0).GetChild(0);
         slots[1] = transform.GetChild(0).GetChild(1);
         craftedSlot = transform.GetChild(1);
         weaponSlots = transform.root.GetChild(4);
+
+        
+
     }
-	
+        
+        
+        	
 	// Update is called once per frame
 	void Update () {
 		if(slots[0].childCount > 0 && slots[1].childCount > 0 && !crafted)

@@ -5,12 +5,22 @@ using UnityEngine.UI;
 
 public class PlayerFeedback : MonoBehaviour {
 
-    public Text text;
+    
 	// Use this for initialization
 	void Start () {
-        gameObject.SetActive(false);
+        DeactivateText();
 
 	}
+
+    public void ActiveText()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public void DeactivateText()
+    {
+        gameObject.SetActive(false);
+    }
 	
 
 
