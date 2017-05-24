@@ -158,13 +158,13 @@ namespace Completed
 				food += pointsPerFood;
 
                 activator.ActiveText();
-                feedbackText.text = "Picked up Food! ";
+                feedbackText.text = "Picked up Food! + " + pointsPerFood;
                 StartCoroutine(FadeOut());
 
 
 
                 //Update foodText to represent current total and notify player that they gained points
-                foodText.text = "+" + pointsPerFood + " Food: " + food;
+                foodText.text = " Food: " + food;
 				
 				//Call the RandomizeSfx function of SoundManager and pass in two eating sounds to choose between to play the eating sound effect.
 				SoundManager.instance.RandomizeSfx (eatSound1, eatSound2);
@@ -178,11 +178,11 @@ namespace Completed
 				//Add pointsPerSoda to players food points total
 				food += pointsPerSoda;
                 activator.ActiveText();
-                feedbackText.text = "Picked up a Soda! ";
+                feedbackText.text = "Picked up a Soda! + " + pointsPerSoda;
                 StartCoroutine(FadeOut());
                
                 //Update foodText to represent current total and notify player that they gained points
-                foodText.text = "+" + pointsPerSoda + " Food: " + food;
+                foodText.text =" Food: " + food;
 				
 				//Call the RandomizeSfx function of SoundManager and pass in two drinking sounds to choose between to play the drinking sound effect.
 				SoundManager.instance.RandomizeSfx (drinkSound1, drinkSound2);
@@ -196,7 +196,7 @@ namespace Completed
 				GameObject.Find("CraftCanvas").GetComponent<Inventory>().SetNewSlot (other.gameObject);
 				SoundManager.instance.RandomizeSfx(pickup1, pickup2);
                 activator.ActiveText();
-                feedbackText.text = "Picked up an " + other.tag + "!";
+                feedbackText.text = "Picked up an " + other.tag + "!" ;
                 StartCoroutine(FadeOut());
 
             }
