@@ -8,6 +8,8 @@ public class WeaponScript : MonoBehaviour
     public GameObject[] weapons;
     //the rotation point from where to shoot.
     public Transform aimPoint;
+    [SerializeField]
+    float damper;
 
     // Use this for initialization
     void Start()
@@ -24,10 +26,23 @@ public class WeaponScript : MonoBehaviour
             /*timeToFire = Time.time + fireRate;*/
             //Lose 1 ammo.
             Instantiate(weapons[0], aimPoint.position, aimPoint.rotation);
+            Recoil();
         }
         else
         {
             Debug.Log("No Ammo");
         }
+    }
+
+    void Recoil()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
+        Transform player = GameObject.Find("Player").transform;
+        Debug.Log(player);
+        Vector2 playerPos = new Vector2(player.position.x, player.position.y);
+        Vector2 newpos = (playerPos - mousePos2D);
+        newpos.Normalize();
+        player.position += new Vector3(newpos.x / damper, newpos.y / damper, 0);
     }
 }

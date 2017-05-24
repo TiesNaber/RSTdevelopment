@@ -113,10 +113,11 @@ namespace Completed
 			//Set the text of levelText to the string "Day" and append the current level number.           
 			levelText.text = "Day " + level;
 
+            
 			infoText = GameObject.Find("Info").GetComponent<Text>();
 			if (infoCount > information.Count)
 				infoCount = 0;
-            infoText.text = information[infoCount];
+            infoText.text = information[infoCount].Replace("\\n", System.Environment.NewLine);
 			infoCount++;
 			
 			//Set levelImage to active blocking player's view of the game board during setup.
