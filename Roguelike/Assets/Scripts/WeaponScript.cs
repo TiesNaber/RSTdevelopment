@@ -61,6 +61,17 @@ public class WeaponScript : MonoBehaviour
         {
             return;
         }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 100))
+            {
+                Debug.Log(hit.transform.gameObject.name);
+            }
+        }
     }
 
     public void SetWeaponActive(string weaponName)
@@ -125,7 +136,7 @@ public class WeaponScript : MonoBehaviour
         //Vector3 mousePos = Camera.main.ScreenToWorldPoint()
     }
 
-    void SwordBehaviour(Collider2D other)
+    /*void OnCollisionEnter2D(Collider2D other)
     {
         if(other.tag == "Enemy")
         {
@@ -137,5 +148,5 @@ public class WeaponScript : MonoBehaviour
             animator.SetTrigger("playerChop");
 
         }
-    }
+    }*/
 }

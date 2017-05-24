@@ -16,7 +16,7 @@ namespace Completed
 		private bool skipMove;                              //Boolean to determine whether or not enemy should skip a turn or move this turn.
 		int behaviour;
 
-        int enemyHealth = 4;
+        int enemyHealth = 40;
 		
 		//Start overrides the virtual Start function of the base class.
 		protected override void Start ()
@@ -128,6 +128,8 @@ namespace Completed
         {   
                       
 			GetComponent<VisualDamage>().MakeItBlink(false);
+            enemyHealth = enemyHealth - damage;
+            Debug.Log("Enemy Health = " + enemyHealth);
 		}
 	}
 }

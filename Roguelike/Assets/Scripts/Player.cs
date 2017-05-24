@@ -32,9 +32,7 @@ namespace Completed
 
 		//Start overrides the Start function of MovingObject
 		protected override void Start ()
-		{
-
-            
+		{           
 
 			//Get a component reference to the Player's animator component
 			animator = GetComponent<Animator>();
@@ -90,6 +88,7 @@ namespace Completed
 				Flip();
 			else if (horizontal < 0 && facingRight)
 				Flip();
+            
 		}
 		
 		//AttemptMove overrides the AttemptMove function in the base class MovingObject
@@ -126,24 +125,28 @@ namespace Completed
 		//OnCantMove overrides the abstract function OnCantMove in MovingObject.
 		//It takes a generic parameter T which in the case of Player is a Wall which the player can attack and destroy.
 		protected override void OnCantMove <T> (T component)
-		{
-			//Set hitWall to equal the component passed in as a parameter.
-			Wall hitWall = component as Wall;
-			
-			//Call the DamageWall function of the Wall we are hitting.
-			hitWall.DamageWall (wallDamage);
-			
-			//Set the attack trigger of the player's animation controller in order to play the player's attack animation.
-			animator.SetTrigger ("playerChop");
+		{ 
+            //Set hitWall to equal the component passed in as a parameter.
+            Wall hitWall = component as Wall;
 
-			SoundManager.instance.RandomizeSfx(dig, dig);
+            //Call the DamageWall function of the Wall we are hitting.
+            hitWall.DamageWall(wallDamage);
+
+            //Set the attack trigger of the player's animation controller in order to play the player's attack animation.
+            animator.SetTrigger("playerChop");
+
+            SoundManager.instance.RandomizeSfx(dig, dig);           
+            
 		}
-		
-		
+             
+
+
+        
 		//OnTriggerEnter2D is sent when another object enters a trigger collider attached to this object (2D physics only).
 		private void OnTriggerEnter2D (Collider2D other)
-		{
-			//Check if the tag of the trigger collided with is Exit.
+		{          
+            
+            //Check if the tag of the trigger collided with is Exit.
 			if (other.tag == "Exit") {
 				//Invoke the Restart function to start the next level with a delay of restartLevelDelay (default 1 second).
 				Invoke ("Restart", restartLevelDelay);
