@@ -16,6 +16,8 @@ public class WeaponScript : MonoBehaviour
     //Bool to check if there is a weaponEquiped
     private bool weaponEquiped;
 
+    private Animator animator;
+
     public static int ammoGun;        //Ammo of the gun
     public static int ammoBomb;       //Ammo of the bomb
 
@@ -117,5 +119,19 @@ public class WeaponScript : MonoBehaviour
     void BombAim()
     {
         //Vector3 mousePos = Camera.main.ScreenToWorldPoint()
+    }
+
+    void SwordBehaviour(Collider2D other)
+    {
+        if(other.tag == "Enemy")
+        {
+            animator.SetTrigger("playerSlash");
+        }
+
+        if(other.tag == "Wall")
+        {
+            animator.SetTrigger("playerChop");
+
+        }
     }
 }
