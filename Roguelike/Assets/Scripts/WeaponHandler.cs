@@ -12,9 +12,12 @@ public class WeaponHandler : MonoBehaviour {
     bool leftActive;
     bool rightActive;
 
+    public WeaponScript weaponScript;
+
     // Use this for initialization
     void Start () {
         baseColor = transform.GetChild(0).GetComponent<Image>().color;
+        weaponScript = GameObject.Find("Player").GetComponent<WeaponScript>();
     }
 	
 	// Update is called once per frame
@@ -45,6 +48,9 @@ public class WeaponHandler : MonoBehaviour {
 
                 if(rightSlot.childCount > 0)
                     rightSlot.GetChild(0).GetComponent<WeaponScript>().enabled = false;
+
+                //Equip weapon
+                weaponScript.SetWeaponActive(leftSlot.GetChild(0).name);
             }
         }
         else
@@ -57,6 +63,8 @@ public class WeaponHandler : MonoBehaviour {
 
                 if (rightSlot.childCount > 0)
                     leftSlot.GetChild(0).GetComponent<WeaponScript>().enabled = false;
+
+                weaponScript.SetWeaponActive(rightSlot.GetChild(0).name);
             }
         }
     }

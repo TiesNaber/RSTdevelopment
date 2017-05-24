@@ -27,6 +27,7 @@ public class Ammo : MonoBehaviour
 
         else if (other.tag == "Wall") 
         {
+            Debug.Log("destroy Bullet");
             Destroy(gameObject);
         }        
     }
