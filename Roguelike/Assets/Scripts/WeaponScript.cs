@@ -58,8 +58,9 @@ public class WeaponScript : MonoBehaviour
         //Fires the gun
         if (weaponEquiped && Input.GetMouseButtonDown(0) && activeWeapon != 2)
         {
-            if (activeWeapon == 1)
-                Destroy(gameObject);
+            /*if (activeWeapon == 1)
+                Destroy(gameObject);*/
+            Debug.Log("fgzd");
             GameObject temp = (GameObject)Instantiate(projectiles[activeWeapon], aimPoint.position, aimPoint.rotation);
             temp.GetComponent<Ammo>().EndPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             temp.GetComponent<Ammo>().Type = activeWeapon;
@@ -82,13 +83,13 @@ public class WeaponScript : MonoBehaviour
         }
     }
 
-    public void SetWeaponActive(string weaponName)
+    public void SetWeaponActive(GameObject weapon)
     {
 
         weaponEquiped = true;
 
         Debug.Log(weaponSlots[0] + ",  "+weaponSlots[1] + ",  "+weaponSlots[2] + ",  ");
-        if (weaponName == "Bomb(Clone)")
+        if (weapon.name == "Bomb(Clone)")
         {
             weaponSlots[0].SetActive(true);
             weaponSlots[1].SetActive(false);
@@ -98,7 +99,7 @@ public class WeaponScript : MonoBehaviour
 
             Debug.Log("Equip Bomb");
         }
-        if (weaponName == "Gun(Clone)")
+        if (weapon.name == "Gun(Clone)")
         {
             weaponSlots[0].SetActive(false);
             weaponSlots[1].SetActive(true);
@@ -107,7 +108,7 @@ public class WeaponScript : MonoBehaviour
             activeWeapon = 1;
             Debug.Log("Equip Gun");
         }
-        if (weaponName == "Sword(Clone)")
+        if (weapon.name == "Sword(Clone)")
         {
             weaponSlots[0].SetActive(false);
             weaponSlots[1].SetActive(false);
@@ -137,11 +138,6 @@ public class WeaponScript : MonoBehaviour
         Vector2 newpos = (playerPos - mousePos2D);
         newpos.Normalize();
         player.position += new Vector3(newpos.x / damper, newpos.y / damper, 0);
-    }
-
-    void BombAim()
-    {
-        //Vector3 mousePos = Camera.main.ScreenToWorldPoint()
     }
 
     /*void OnCollisionEnter2D(Collider2D other)

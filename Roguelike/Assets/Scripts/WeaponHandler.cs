@@ -52,7 +52,7 @@ public class WeaponHandler : MonoBehaviour {
 
                 //Equip weapon
                 if (leftSlot.childCount > 0)
-                    weaponScript.SetWeaponActive(leftSlot.GetChild(0).name);
+                    weaponScript.SetWeaponActive(leftSlot.GetChild(0).gameObject);
                 else
                     Debug.Log("something went wrong");
             }
@@ -65,7 +65,7 @@ public class WeaponHandler : MonoBehaviour {
                 leftSlot.GetComponent<Image>().color = baseColor;
 
                 if (rightSlot.childCount > 0)
-                    weaponScript.SetWeaponActive(rightSlot.GetChild(0).name);
+                    weaponScript.SetWeaponActive(rightSlot.GetChild(0).gameObject);
                 else
                     Debug.Log("something went wrong");
             }

@@ -5,7 +5,7 @@ public class Ammo : MonoBehaviour
 {
     public float speed;
     public int damage = 10;
-    private int type;
+    private int? type;
     public int Type
     {
         set { type = value; }
