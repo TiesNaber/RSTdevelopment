@@ -6,8 +6,6 @@ namespace Completed
 {
     public class BombKill : MonoBehaviour {
 
-        public GameObject groundExplosion;
-
         private void OnTriggerEnter2D(Collider2D col)
         {
             if (col.tag == "Enemy")
@@ -22,7 +20,6 @@ namespace Completed
             if(col.tag == "Wall")
             {
                 col.GetComponent<Wall>().DamageWall(5);
-                Instantiate(groundExplosion, col.transform.position, Quaternion.identity);
             }
         }
     }
