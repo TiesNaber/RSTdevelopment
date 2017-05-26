@@ -65,6 +65,9 @@ namespace Completed
 		//MoveEnemy is called by the GameManger each turn to tell each Enemy to try to move towards the player.
 		public void MoveEnemy()
 		{
+            if (this == null)
+                return;
+
 			int xDir = 0;
 			int yDir = 0;
 			int moveSpeed = 1;
@@ -98,7 +101,7 @@ namespace Completed
 			//Call the AttemptMove function and pass in the generic parameter Player, because Enemy is moving and expecting to potentially encounter a Player
 			AttemptMove<Player>(xDir, yDir);
 
-            if (Random.Range(0, 5) < 1)
+            if (Random.Range(0, 10) < 1)
                 GetComponent<AudioSource>().Play();
 
 
@@ -109,22 +112,19 @@ namespace Completed
 		//and takes a generic parameter T which we use to pass in the component we expect to encounter, in this case Player
 		protected override void OnCantMove <T> (T component)
 		{
-            if (!gameObject.activeInHierarchy)
-            {
-                //Declare hitPlayer and set it to equal the encountered component.
-                Player hitPlayer = component as Player;
-                hitPlayer.GetComponent<VisualDamage>().MakeItBlink(true, true);
+            //Declare hitPlayer and set it to equal the encountered component.
+            Player hitPlayer = component as Player;
+            hitPlayer.GetComponent<VisualDamage>().MakeItBlink(true, true);
 
 
-                //Call the LoseFood function of hitPlayer passing it playerDamage, the amount of foodpoints to be subtracted.
-                hitPlayer.LoseFood(playerDamage);
+            //Call the LoseFood function of hitPlayer passing it playerDamage, the amount of foodpoints to be subtracted.
+            hitPlayer.LoseFood(playerDamage);
 
-                //Set the attack trigger of animator to trigger Enemy attack animation.
-                animator.SetTrigger("enemyAttack");
+            //Set the attack trigger of animator to trigger Enemy attack animation.
+            animator.SetTrigger("enemyAttack");
 
-                //Call the RandomizeSfx function of SoundManager passing in the two audio clips to choose randomly between.
-                SoundManager.instance.RandomizeSfx(attackSound1, attackSound2);
-            }
+            //Call the RandomizeSfx function of SoundManager passing in the two audio clips to choose randomly between.
+            SoundManager.instance.RandomizeSfx(attackSound1, attackSound2);
 		}
 	}
 }

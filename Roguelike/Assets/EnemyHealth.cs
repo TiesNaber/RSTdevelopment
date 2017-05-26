@@ -11,9 +11,9 @@ public class EnemyHealth : MonoBehaviour {
         {
             enemyHealth -= value;
             if(enemyHealth <= 0)
-                GetComponent<VisualDamage>().MakeItBlink(false, false);
-            else
                 GetComponent<VisualDamage>().MakeItBlink(false, true);
+            else
+                GetComponent<VisualDamage>().MakeItBlink(false, false);
 
         }
     }

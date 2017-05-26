@@ -44,7 +44,7 @@ public class VisualDamage : MonoBehaviour {
 
 		if(!player && dead)
 		{
-			gameObject.SetActive(false);
+            Destroy(gameObject);
             vision.ExpandVision();
 
 		}
