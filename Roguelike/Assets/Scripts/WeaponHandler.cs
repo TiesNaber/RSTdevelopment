@@ -30,11 +30,11 @@ public class WeaponHandler : MonoBehaviour {
         if(!weaponScript)
             weaponScript = GameObject.Find("Player").GetComponent<WeaponScript>();
 
-        if (Input.mouseScrollDelta.y > 0)
+        if (Input.mouseScrollDelta.y > 0 || Input.GetKeyDown(KeyCode.U))
         {
             SetWeapon(true);
         }
-        else if(Input.mouseScrollDelta.y < 0)
+        else if(Input.mouseScrollDelta.y < 0 || Input.GetKeyDown(KeyCode.J))
         {
             SetWeapon(false);
         }

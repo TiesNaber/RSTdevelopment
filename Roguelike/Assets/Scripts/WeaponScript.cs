@@ -73,6 +73,10 @@ public class WeaponScript : MonoBehaviour
             temp.GetComponent<Ammo>().Type = activeWeapon;
             DeactivateWeapon();
         }
+        else if(Input.GetMouseButtonDown(0) && activeWeapon == 2)
+        {
+            DeactivateWeapon();
+        }
         else
         {
             return;

@@ -114,10 +114,12 @@ namespace Completed
 			levelText.text = "Day " + level;
 
             infoText = GameObject.Find("Info").GetComponent<Text>();
-			if (infoCount > information.Count)
+			if (infoCount > information.Count - 1)
 				infoCount = 0;
             infoText.text = information[infoCount].Replace("\\n", System.Environment.NewLine);
-			infoCount++;           
+            Debug.Log(infoText.text);
+			infoCount++;
+            infoText.enabled = true;
             
 			
 			//Set levelImage to active blocking player's view of the game board during setup.
