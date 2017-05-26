@@ -15,7 +15,6 @@ public class WeaponScript : MonoBehaviour
     private int activeWeapon;
     //Bool to check if there is a weaponEquiped
     private bool weaponEquiped;
-
     private Animator animator;
 
     int ammoGun;        //Ammo of the gun
@@ -73,6 +72,11 @@ public class WeaponScript : MonoBehaviour
             temp.GetComponent<Ammo>().EndPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             temp.GetComponent<Ammo>().Type = activeWeapon;
             DeactivateWeapon();
+        }
+        else if (weaponEquiped && Input.GetMouseButtonDown(0) && activeWeapon == 2 && weaponSlots[2].GetComponent<MeleeScript>().canHitEnemy == true)//if sword is equipped and an enemy in range
+        {
+            
+            //Melee Attack Enemy
         }
         else
         {
@@ -157,4 +161,6 @@ public class WeaponScript : MonoBehaviour
         newpos.Normalize();
         player.position += new Vector3(newpos.x / damper, newpos.y / damper, 0);
     }
+
+    
 }

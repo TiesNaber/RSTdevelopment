@@ -2,23 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeScript : MonoBehaviour {
+public class MeleeScript : MonoBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
+    public bool canHitEnemy;
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		
 	}
 
-    void OnTriggerEnter2D(Collider2D other)
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("collision  " + other.name);
+        if (other.tag == "Enemy")
+        {
+            canHitEnemy = true;
+        }
+       
+    }
+
+    public void OnTriggerExit2D(Collider2D other)
     {
         if (other.tag == "Enemy")
         {
-            Debug.Log("JFDLSKJFSDFSDLKFJSDLKFJFLKSDJFLKDSFJDFS");
+            canHitEnemy = false;
         }
     }
 }
