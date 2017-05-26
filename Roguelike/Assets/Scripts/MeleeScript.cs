@@ -19,22 +19,14 @@ using UnityEngine;
 
         }
 
-        public void OnTriggerEnter2D(Collider2D other)
+        public void OnTriggerStay2D(Collider2D other)
         {
             Debug.Log("collision  " + other.name);
-            if (other.tag == "Enemy")
+            if (other.tag == "Enemy" && Input.GetMouseButtonDown(0))
             {
                 canHitEnemy = true;
                 other.GetComponent<EnemyHealth>().ChangeEnemyHealth = 30;
             }
 
-        }
-
-        public void OnTriggerExit2D(Collider2D other)
-        {
-            if (other.tag == "Enemy")
-            {
-                canHitEnemy = false;
-            }
         }
     }

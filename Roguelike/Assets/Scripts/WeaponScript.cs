@@ -73,11 +73,6 @@ public class WeaponScript : MonoBehaviour
             temp.GetComponent<Ammo>().Type = activeWeapon;
             DeactivateWeapon();
         }
-        else if (weaponEquiped && Input.GetMouseButtonDown(0) && activeWeapon == 2 && weaponSlots[2].GetComponent<MeleeScript>().canHitEnemy == true)//if sword is equipped and an enemy in range
-        {
-            
-            //Melee Attack Enemy
-        }
         else
         {
             return;
