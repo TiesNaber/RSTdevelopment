@@ -2,37 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeScript : MonoBehaviour
-{
-
-    public bool canHitEnemy;
-
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    public class MeleeScript : MonoBehaviour
     {
-		
-	}
 
-    public void OnTriggerEnter2D(Collider2D other)
-    {
-        Debug.Log("collision  " + other.name);
-        if (other.tag == "Enemy")
+        public bool canHitEnemy;
+
+        // Use this for initialization
+        void Start()
         {
-            canHitEnemy = true;
-        }
-       
-    }
 
-    public void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.tag == "Enemy")
+        }
+
+        // Update is called once per frame
+        void Update()
         {
-            canHitEnemy = false;
+
+        }
+
+        public void OnTriggerEnter2D(Collider2D other)
+        {
+            Debug.Log("collision  " + other.name);
+            if (other.tag == "Enemy")
+            {
+                canHitEnemy = true;
+                other.GetComponent<EnemyHealth>().ChangeEnemyHealth = 30;
+            }
+
+        }
+
+        public void OnTriggerExit2D(Collider2D other)
+        {
+            if (other.tag == "Enemy")
+            {
+                canHitEnemy = false;
+            }
         }
     }
-}
