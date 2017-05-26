@@ -58,7 +58,7 @@ public class Ammo : MonoBehaviour
         {
             GameObject explode = (GameObject)Instantiate(explosion, transform.position, Quaternion.identity);
             Camera.main.GetComponent<CameraFollow2DPlatformer>().ShakeMe = 1;
-            Destroy(explode, 3);
+            Destroy(explode, 1.3f);
             Destroy(gameObject, 0.01f);
         }
     }
