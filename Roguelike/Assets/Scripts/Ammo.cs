@@ -63,12 +63,12 @@ public class Ammo : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-
+    public void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("collision  " + other.name);
         if (other.tag == "Enemy")
-        {            
-            //other.GetComponent<EnemyHealth>().EnemyTakeDamage(damage);
+        {
+            other.GetComponent<EnemyHealth>().ChangeEnemyHealth = damage;
             Destroy(gameObject);
         }
 

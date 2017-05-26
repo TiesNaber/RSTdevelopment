@@ -16,6 +16,8 @@ public class WeaponHandler : MonoBehaviour {
 
     public WeaponScript weaponScript;
 
+    
+
     // Use this for initialization
     void Start () {
         baseColor = transform.GetChild(0).GetComponent<Image>().color;
@@ -52,7 +54,7 @@ public class WeaponHandler : MonoBehaviour {
 
                 //Equip weapon
                 if (leftSlot.childCount > 0)
-                    weaponScript.SetWeaponActive(leftSlot.GetChild(0).gameObject);
+                    weaponScript.SetWeaponActive(leftSlot.GetChild(0));
                 else
                     Debug.Log("something went wrong");
             }
@@ -65,7 +67,7 @@ public class WeaponHandler : MonoBehaviour {
                 leftSlot.GetComponent<Image>().color = baseColor;
 
                 if (rightSlot.childCount > 0)
-                    weaponScript.SetWeaponActive(rightSlot.GetChild(0).gameObject);
+                    weaponScript.SetWeaponActive(rightSlot.GetChild(0));
                 else
                     Debug.Log("something went wrong");
             }

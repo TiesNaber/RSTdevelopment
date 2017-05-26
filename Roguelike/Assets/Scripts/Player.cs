@@ -28,7 +28,6 @@ namespace Completed
         public PlayerFeedback activator;
 		private Animator animator;					//Used to store a reference to the Player's animator component.
 		private int food;                           //Used to store player food points total during level.
-		private bool facingRight = true;
 
 		//Start overrides the Start function of MovingObject
 		protected override void Start ()
@@ -84,12 +83,14 @@ namespace Completed
 				AttemptMove<Wall> (horizontal, vertical);
 			}
 
-			if (horizontal > 0 && !facingRight)
-				Flip();
-			else if (horizontal < 0 && facingRight)
-				Flip();
-            
-		}
+			if (horizontal > 0)
+                GetComponent<PlayerFlip>().FaceRight = true;
+            else if (horizontal < 0)
+                GetComponent<PlayerFlip>().FaceRight = false;
+
+
+
+        }
 		
 		//AttemptMove overrides the AttemptMove function in the base class MovingObject
 		//AttemptMove takes a generic parameter T which for Player will be of the type Wall, it also takes integers for x and y direction to move in.
@@ -231,34 +232,24 @@ namespace Completed
 			//Check to see if game has ended.
 			CheckIfGameOver ();
 		}
-		
-		
-		//CheckIfGameOver checks if the player is out of food points and if so, ends the game.
-		private void CheckIfGameOver ()
-		{
-			//Check if food point total is less than or equal to zero.
-			if (food <= 0) 
-			{
-				//Call the PlaySingle function of SoundManager and pass it the gameOverSound as the audio clip to play.
-				SoundManager.instance.PlaySingle (gameOverSound);
-				
-				//Stop the background music.
-				SoundManager.instance.musicSource.Stop();
-				
-				//Call the GameOver function of GameManager.
-				GameManager.instance.GameOver ();
-			}
-		}
 
-		void Flip()
-		{
-			//Flipping the character by changing the scale to negative or postive
-			facingRight = !facingRight;
-			Vector3 theScale = gameObject.transform.localScale;
-			theScale.x *= -1;
-			gameObject.transform.localScale = theScale;
-		   
-		}
+
+        //CheckIfGameOver checks if the player is out of food points and if so, ends the game.
+        private void CheckIfGameOver()
+        {
+            //Check if food point total is less than or equal to zero.
+            if (food <= 0)
+            {
+                //Call the PlaySingle function of SoundManager and pass it the gameOverSound as the audio clip to play.
+                SoundManager.instance.PlaySingle(gameOverSound);
+
+                //Stop the background music.
+                SoundManager.instance.musicSource.Stop();
+
+                //Call the GameOver function of GameManager.
+                GameManager.instance.GameOver();
+            }
+        }
 
         public IEnumerator FadeOut()
         {

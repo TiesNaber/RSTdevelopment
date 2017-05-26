@@ -25,6 +25,8 @@ public class WeaponScript : MonoBehaviour
     [SerializeField]
     bool start;
 
+    Vector3 mousePos;
+
     private int weaponType = 0;
     public int WeaponType
     {
@@ -32,6 +34,7 @@ public class WeaponScript : MonoBehaviour
     }
 
     WeaponHandler weaponHandler;
+    GameObject selectedWeapon;
 
     // Use this for initialization
     void Start()
@@ -55,12 +58,17 @@ public class WeaponScript : MonoBehaviour
     void Update()
     {
 
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (mousePos.x < transform.position.x && weaponEquiped)
+            GetComponent<PlayerFlip>().FaceRight = false;
+        else if (mousePos.x > transform.position.x && weaponEquiped)
+            GetComponent<PlayerFlip>().FaceRight = true;
+
         //Fires the gun
         if (weaponEquiped && Input.GetMouseButtonDown(0) && activeWeapon != 2)
         {
-            /*if (activeWeapon == 1)
-                Destroy(gameObject);*/
-            Debug.Log("fgzd");
+            if (activeWeapon == 1)
+                Recoil();
             GameObject temp = (GameObject)Instantiate(projectiles[activeWeapon], aimPoint.position, aimPoint.rotation);
             temp.GetComponent<Ammo>().EndPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             temp.GetComponent<Ammo>().Type = activeWeapon;
@@ -81,9 +89,11 @@ public class WeaponScript : MonoBehaviour
                 Debug.Log(hit.transform.gameObject.name);
             }
         }
+
+        
     }
 
-    public void SetWeaponActive(GameObject weapon)
+    public void SetWeaponActive(Transform weapon)
     {
 
         weaponEquiped = true;
@@ -107,6 +117,8 @@ public class WeaponScript : MonoBehaviour
 
             activeWeapon = 1;
             Debug.Log("Equip Gun");
+
+            
         }
         if (weapon.name == "Sword(Clone)")
         {
@@ -117,6 +129,11 @@ public class WeaponScript : MonoBehaviour
             activeWeapon = 2;
             Debug.Log("Equip Sword");
         }
+
+        if (weapon == weaponHandler.transform.GetChild(0))
+            selectedWeapon = weapon.gameObject;
+        else
+            selectedWeapon = weapon.gameObject;
     }
 
     public void DeactivateWeapon()
@@ -126,6 +143,8 @@ public class WeaponScript : MonoBehaviour
         weaponSlots[0].SetActive(false);
         weaponSlots[1].SetActive(false);
         weaponSlots[2].SetActive(false);
+
+        Destroy(selectedWeapon);
     }
 
     void Recoil()
@@ -133,24 +152,9 @@ public class WeaponScript : MonoBehaviour
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
         Transform player = GameObject.Find("Player").transform;
-        Debug.Log(player);
         Vector2 playerPos = new Vector2(player.position.x, player.position.y);
         Vector2 newpos = (playerPos - mousePos2D);
         newpos.Normalize();
         player.position += new Vector3(newpos.x / damper, newpos.y / damper, 0);
     }
-
-    /*void OnCollisionEnter2D(Collider2D other)
-    {
-        if(other.tag == "Enemy")
-        {
-            animator.SetTrigger("playerSlash");
-        }
-
-        if(other.tag == "Wall")
-        {
-            animator.SetTrigger("playerChop");
-
-        }
-    }*/
 }

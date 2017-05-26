@@ -16,7 +16,7 @@ namespace Completed
 		private bool skipMove;                              //Boolean to determine whether or not enemy should skip a turn or move this turn.
 		int behaviour;
 
-        int enemyHealth = 40;
+        
 		
 		//Start overrides the virtual Start function of the base class.
 		protected override void Start ()
@@ -109,27 +109,22 @@ namespace Completed
 		//and takes a generic parameter T which we use to pass in the component we expect to encounter, in this case Player
 		protected override void OnCantMove <T> (T component)
 		{
-			//Declare hitPlayer and set it to equal the encountered component.
-			Player hitPlayer = component as Player;
-			hitPlayer.GetComponent<VisualDamage>().MakeItBlink(true);
-           
-			
-			//Call the LoseFood function of hitPlayer passing it playerDamage, the amount of foodpoints to be subtracted.
-			hitPlayer.LoseFood (playerDamage);
-			
-			//Set the attack trigger of animator to trigger Enemy attack animation.
-			animator.SetTrigger ("enemyAttack");
-			
-			//Call the RandomizeSfx function of SoundManager passing in the two audio clips to choose randomly between.
-			SoundManager.instance.RandomizeSfx (attackSound1, attackSound2);
-		}
+            if (!gameObject.activeInHierarchy)
+            {
+                //Declare hitPlayer and set it to equal the encountered component.
+                Player hitPlayer = component as Player;
+                hitPlayer.GetComponent<VisualDamage>().MakeItBlink(true, true);
 
-		public void GetDamage(int damage)
-        {   
-                      
-			GetComponent<VisualDamage>().MakeItBlink(false);
-            enemyHealth = enemyHealth - damage;
-            Debug.Log("Enemy Health = " + enemyHealth);
+
+                //Call the LoseFood function of hitPlayer passing it playerDamage, the amount of foodpoints to be subtracted.
+                hitPlayer.LoseFood(playerDamage);
+
+                //Set the attack trigger of animator to trigger Enemy attack animation.
+                animator.SetTrigger("enemyAttack");
+
+                //Call the RandomizeSfx function of SoundManager passing in the two audio clips to choose randomly between.
+                SoundManager.instance.RandomizeSfx(attackSound1, attackSound2);
+            }
 		}
 	}
 }
