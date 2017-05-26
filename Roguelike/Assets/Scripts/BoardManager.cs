@@ -47,8 +47,6 @@ namespace Completed
         {
             columns = Random.Range(roomSize.minimum, roomSize.maximum);
             rows = Random.Range(roomSize.minimum, roomSize.maximum);
-
-            Debug.Log("Columns = " + columns + ", Rows = " + rows);
         }
 
 		//Clears our list gridPositions and prepares it to generate a new board.
@@ -148,15 +146,12 @@ namespace Completed
 			InitialiseList ();
 
             //Instantiate a random number of wall tiles based on minimum and maximum, at randomized positions.
-            Debug.Log("inner walltiles spawned = ");
             LayoutObjectAtRandom (wallTiles, wallCount.minimum + ((columns * rows) / 100), wallCount.maximum + ((columns * rows) / 100));
             //Instantiate a random number of food tiles based on minimum and maximum, at randomized positions.
-            Debug.Log("Food tiles spawned = ");
             LayoutObjectAtRandom (foodTiles, foodCount.minimum + ((columns * rows) / 100), foodCount.maximum + ((columns * rows) / 100));            
             //Determine number of enemies based on current level number, based on a logarithmic progression
             int enemyCount = (int)Mathf.Log(level, 2f);
             //Instantiate a random number of enemies based on minimum and maximum, at randomized positions.
-            Debug.Log("Enemies spawned = ");
             LayoutObjectAtRandom (enemyTiles, enemyCount, enemyCount);
 
             //Choose a position for randomPosition by getting a random position from our list of available Vector3s stored in gridPosition
