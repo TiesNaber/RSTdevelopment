@@ -38,6 +38,9 @@ namespace Completed
         public int totalWoodPickedUp;
         public int totalStonePickedUp;
         public int totalLevelsPlayed;
+        public int totalGunsCrafted;
+        public int totalSwordsCrafted;
+        public int totalBombsCrafted;
 
 
 
@@ -188,7 +191,10 @@ namespace Completed
                 { "Total wood picked up", totalWoodPickedUp },
                 { "Total stone picked up", totalStonePickedUp},
                 { "Total gunpowder picked up", totalGunPowderPickedUp},
-                { "Total level played", totalLevelsPlayed}
+                { "Total level played", totalLevelsPlayed},
+                { "Total Guns Crafted", totalGunsCrafted},
+                { "Total Bombs Crafted", totalBombsCrafted},
+                { "Total Swords Crafted", totalSwordsCrafted}
               });
 
             //Set levelText to display number of levels passed and game over message
