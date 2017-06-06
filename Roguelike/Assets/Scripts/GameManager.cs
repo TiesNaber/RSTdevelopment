@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine.Analytics;
 
 namespace Completed
 {
@@ -28,13 +29,22 @@ namespace Completed
 		private int level = 0;									//Current level number, expressed in game as "Day 1".
 		private List<Enemy> enemies;							//List of all Enemy units, used to issue them move commands.
 		private bool enemiesMoving;								//Boolean to check if enemies are moving.
-		private bool doingSetup = true;							//Boolean to check if we're setting up board, prevent Player from moving during setup.
+		private bool doingSetup = true;                         //Boolean to check if we're setting up board, prevent Player from moving during setup.
 
-		
-		
-		
-		//Awake is always called before any Start functions
-		void Awake()
+        [HideInInspector]
+        public int totalFoodPickedUp;
+        public int totalSodaPickUp;
+        public int totalGunPowderPickedUp;
+        public int totalWoodPickedUp;
+        public int totalStonePickedUp;
+        public int totalLevelsPlayed;
+
+
+
+
+
+        //Awake is always called before any Start functions
+        void Awake()
 		{
 			//Check if instance already exists
 			if (instance == null)
@@ -171,14 +181,28 @@ namespace Completed
 		//GameOver is called when the player reaches 0 food points
 		public void GameOver()
 		{
-			//Set levelText to display number of levels passed and game over message
-			levelText.text = "After " + level + " days, you starved.";
+            Analytics.CustomEvent("gameOver", new Dictionary<string, object>
+              {
+                { "Total foodpoints picked up", totalFoodPickedUp },
+                { "Total sodapoints picked up", totalSodaPickUp },
+                { "Total wood picked up", totalWoodPickedUp },
+                { "Total stone picked up", totalStonePickedUp},
+                { "Total gunpowder picked up", totalGunPowderPickedUp},
+                { "Total level played", totalLevelsPlayed}
+              });
+
+            //Set levelText to display number of levels passed and game over message
+            levelText.text = "After " + level + " days, you starved.";
 			
 			//Enable black background image gameObject.
 			levelImage.SetActive(true);
 			
 			//Disable this GameManager.
 			enabled = false;
+
+
+
+
 		}
 		
 		//Coroutine to move enemies in sequence.

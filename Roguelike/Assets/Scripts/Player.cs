@@ -29,6 +29,10 @@ namespace Completed
 		private Animator animator;					//Used to store a reference to the Player's animator component.
 		private int food;                           //Used to store player food points total during level.
 
+        
+
+
+
 		//Start overrides the Start function of MovingObject
 		protected override void Start ()
 		{           
@@ -161,6 +165,9 @@ namespace Completed
 				//Add pointsPerFood to the players current food total.
 				food += pointsPerFood;
 
+                //stored to check how much food the player picked up in total
+                GameManager.instance.totalFoodPickedUp += pointsPerFood;
+
                 activator.ActiveText();
                 feedbackText.text = "Picked up Food! + " + pointsPerFood;
                 StartCoroutine(FadeOut());
@@ -181,6 +188,9 @@ namespace Completed
 			else if (other.tag == "Soda") {
 				//Add pointsPerSoda to players food points total
 				food += pointsPerSoda;
+                //stored to check how much soda the player picked up in total
+                GameManager.instance.totalSodaPickUp += pointsPerSoda;
+
                 activator.ActiveText();
                 feedbackText.text = "Picked up a Soda! + " + pointsPerSoda;
                 StartCoroutine(FadeOut());
@@ -198,9 +208,23 @@ namespace Completed
 			//Check if the object is an Item
 			else if (other.tag == "Item") {
 				GameObject.Find("CraftCanvas").GetComponent<Inventory>().SetNewSlot (other.gameObject);
-				SoundManager.instance.RandomizeSfx(pickup1, pickup2);
+				SoundManager.instance.RandomizeSfx(pickup1, pickup2);                
+
+                if (other.name == "Stone(Clone)") {
+                    feedbackText.text = "Picked up Stone!";
+                    GameManager.instance.totalStonePickedUp++;
+                    Debug.Log("Picked up Stone x " + GameManager.instance.totalStonePickedUp);
+                } else if (other.name == "Wood(Clone)"){
+                    feedbackText.text = "Picked up Wood!";
+                    GameManager.instance.totalWoodPickedUp++;
+                    Debug.Log("Picked up Wood x " + GameManager.instance.totalWoodPickedUp);
+                } else if (other.name == "GunPowder(Clone)") {
+                    feedbackText.text = "Picked up GunPowder!";
+                    GameManager.instance.totalGunPowderPickedUp++;
+                    Debug.Log("Picked up GunPowder x " + GameManager.instance.totalGunPowderPickedUp);
+                }
+
                 activator.ActiveText();
-                feedbackText.text = "Picked up an " + other.tag + "!" ;
                 StartCoroutine(FadeOut());
 
             }
@@ -210,7 +234,9 @@ namespace Completed
 		//Restart reloads the scene when called.
 		private void Restart ()
 		{
-			//Load the last scene loaded, in this case Main, the only scene in the game. And we load it in "Single" mode so it replace the existing one
+            //reference to see how many levels the player played before he died.
+            GameManager.instance.totalLevelsPlayed++;
+            //Load the last scene loaded, in this case Main, the only scene in the game. And we load it in "Single" mode so it replace the existing one
 			//and not load all the scene object in the current scene.
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
 		}
