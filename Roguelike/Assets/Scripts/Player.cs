@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;	//Allows us to use UI.
 using UnityEngine.SceneManagement;
+using UnityEngine.Analytics;
+using System.Collections.Generic;
 
 namespace Completed
 {
@@ -236,9 +238,17 @@ namespace Completed
 		{
             //reference to see how many levels the player played before he died.
             GameManager.instance.totalLevelsPlayed++;
+            Debug.Log("Total time played" + Time.timeSinceLevelLoad);
+            Analytics.CustomEvent("Total time played each level", new Dictionary<string, object>
+              {
+                { "Level" + GameManager.instance.level, Time.timeSinceLevelLoad },                              
+              });
+
+            
+
             //Load the last scene loaded, in this case Main, the only scene in the game. And we load it in "Single" mode so it replace the existing one
-			//and not load all the scene object in the current scene.
-			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+            //and not load all the scene object in the current scene.
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
 		}
 		
 		
